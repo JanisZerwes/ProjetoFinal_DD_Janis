@@ -14,7 +14,7 @@ public class ConsultarVeterinario extends JPanel {
 		setLayout(null);
 
 		table = new JTable();
-		table.setBounds(54, 68, 583, 313);
+		table.setBounds(12, 68, 528, 228);
 		add(table);
 
 		JButton btnConsultar = new JButton("Consultar");

@@ -35,6 +35,9 @@ public class CadastrarVeterinario extends JPanel {
 		btnVoltar.setBounds(138, 369, 97, 25);
 		add(btnVoltar);
 
-	}
+		JButton btnConsultar = new JButton("Consultar");
+		btnConsultar.setBounds(12, 239, 97, 25);
+		add(btnConsultar);
 
+	}
 }

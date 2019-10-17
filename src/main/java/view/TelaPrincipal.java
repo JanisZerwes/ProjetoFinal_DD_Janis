@@ -118,9 +118,23 @@ public class TelaPrincipal extends JFrame {
 		menuBar.add(mnProcedimento);
 
 		JMenuItem mntmCadastrar_2 = new JMenuItem("Cadastrar");
+		mntmCadastrar_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				contentPane = new CadastrarProcedimento();
+				setContentPane(contentPane);
+				revalidate();
+			}
+		});
 		mnProcedimento.add(mntmCadastrar_2);
 
 		JMenuItem mntmConsultar_3 = new JMenuItem("Consultar");
+		mntmConsultar_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				contentPane = new ConsultarProcedimento();
+				setContentPane(contentPane);
+				revalidate();
+			}
+		});
 		mnProcedimento.add(mntmConsultar_3);
 
 		JMenu mnRelatrio = new JMenu("Relat\u00F3rio");
