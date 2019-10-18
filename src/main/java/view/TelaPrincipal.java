@@ -6,16 +6,15 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
-public class TelaPrincipal extends JFrame {
+public class TelaPrincipal {
 
-	private JPanel contentPane;
+	private JFrame frame;
 
 	/**
 	 * Launch the application.
@@ -24,8 +23,8 @@ public class TelaPrincipal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaPrincipal frame = new TelaPrincipal();
-					frame.setVisible(true);
+					TelaPrincipal window = new TelaPrincipal();
+					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -34,120 +33,147 @@ public class TelaPrincipal extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Create the application.
 	 */
 	public TelaPrincipal() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 500);
-		contentPane = new JPanel();
-		contentPane.setBackground(Color.GREEN);
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.getContentPane().setBackground(Color.GREEN);
+		frame.setBounds(100, 100, 1066, 615);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.setToolTipText("");
-		menuBar.setBounds(0, 0, 770, 26);
-		contentPane.add(menuBar);
+		frame.setJMenuBar(menuBar);
 
-		JMenu mnNewMenu = new JMenu("Cliente");
-		mnNewMenu.setForeground(Color.BLACK);
-		mnNewMenu.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		menuBar.add(mnNewMenu);
+		JMenu mnCliente = new JMenu("Cliente");
+		mnCliente.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icones/icones/icons8-fila.png")));
+		mnCliente.setForeground(Color.BLACK);
+		mnCliente.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		menuBar.add(mnCliente);
 
-		JMenuItem mntmCadastrar = new JMenuItem("Cadastrar");
-		mntmCadastrar.addActionListener(new ActionListener() {
+		JMenuItem mntmCadastroCliente = new JMenuItem("Cadastrar");
+		mntmCadastroCliente.setFont(new Font("Segoe UI", Font.PLAIN, 19));
+		mntmCadastroCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				contentPane = new CadastrarCliente();
-				setContentPane(contentPane);
-				revalidate();
+				CadastrarCliente cadastrarC = new CadastrarCliente();
+				frame.setContentPane(cadastrarC);
+				frame.revalidate();
 			}
 		});
-		mnNewMenu.add(mntmCadastrar);
+		mnCliente.add(mntmCadastroCliente);
 
-		JMenuItem mntmConsultar_1 = new JMenuItem("Consultar");
-		mntmConsultar_1.addActionListener(new ActionListener() {
+		JMenuItem mntmCosultaCliente = new JMenuItem("Consultar");
+		mntmCosultaCliente.setFont(new Font("Segoe UI", Font.PLAIN, 19));
+		mntmCosultaCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				contentPane = new ConsultarCliente();
-				setContentPane(contentPane);
-				revalidate();
+				ConsultarCliente consultarCliente = new ConsultarCliente();
+				frame.setContentPane(consultarCliente);
+				frame.revalidate();
 			}
 		});
-		mnNewMenu.add(mntmConsultar_1);
+		mnCliente.add(mntmCosultaCliente);
 
 		JMenu mnVeterinrio = new JMenu("Veterin\u00E1rio");
-		mnVeterinrio.setBackground(Color.GREEN);
+		mnVeterinrio.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icones/png/icons8-m\u00E9dico-80.png")));
 		mnVeterinrio.setForeground(Color.BLACK);
 		mnVeterinrio.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		menuBar.add(mnVeterinrio);
 
-		JMenuItem mntmCadastrar_1 = new JMenuItem("Cadastrar");
-		mnVeterinrio.add(mntmCadastrar_1);
-
-		JMenuItem mntmConsultar_2 = new JMenuItem("Consultar");
-		mnVeterinrio.add(mntmConsultar_2);
-
-		JMenu mnPaciente = new JMenu("Pet");
-		mnPaciente.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		mnPaciente.setForeground(Color.BLACK);
-		menuBar.add(mnPaciente);
-
-		JMenuItem mntmCadastro = new JMenuItem("Cadastro");
-		mntmCadastro.addActionListener(new ActionListener() {
+		JMenuItem mntmCadastroVeterinario = new JMenuItem("Cadastrar");
+		mntmCadastroVeterinario.setFont(new Font("Segoe UI", Font.PLAIN, 19));
+		mntmCadastroVeterinario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				contentPane = new CadastrarPet();
-				setContentPane(contentPane);
-				revalidate();
+				CadastrarVeterinario cadastrarVeterinario = new CadastrarVeterinario();
+				frame.setContentPane(cadastrarVeterinario);
+				frame.revalidate();
 			}
 		});
-		mnPaciente.add(mntmCadastro);
+		mnVeterinrio.add(mntmCadastroVeterinario);
 
-		JMenuItem mntmConsultar = new JMenuItem("Consultar");
-		mntmConsultar.addActionListener(new ActionListener() {
+		JMenuItem mntmConsultarVeterinario = new JMenuItem("Consultar");
+		mntmConsultarVeterinario.setFont(new Font("Segoe UI", Font.PLAIN, 19));
+		mntmConsultarVeterinario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				contentPane = new ConsultarPet();
-				setContentPane(contentPane);
-				revalidate();
+				ConsultarVeterinario consultarVeterinario = new ConsultarVeterinario();
+				frame.setContentPane(consultarVeterinario);
+				frame.revalidate();
 			}
 		});
-		mnPaciente.add(mntmConsultar);
+		mnVeterinrio.add(mntmConsultarVeterinario);
 
-		JMenu mnProcedimento = new JMenu("Procedimento");
-		mnProcedimento.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		mnProcedimento.setForeground(Color.BLACK);
-		menuBar.add(mnProcedimento);
+		JMenu mnPet = new JMenu("Pet");
+		mnPet.setIcon(
+				new ImageIcon(TelaPrincipal.class.getResource("/icones/icones/icons8-pegada-de-cachorro-80.png")));
+		mnPet.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		mnPet.setForeground(Color.BLACK);
+		menuBar.add(mnPet);
 
-		JMenuItem mntmCadastrar_2 = new JMenuItem("Cadastrar");
-		mntmCadastrar_2.addActionListener(new ActionListener() {
+		JMenuItem mntmCadastroPet = new JMenuItem("Cadastrar");
+		mntmCadastroPet.setFont(new Font("Segoe UI", Font.PLAIN, 19));
+		mntmCadastroPet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				contentPane = new CadastrarProcedimento();
-				setContentPane(contentPane);
-				revalidate();
+				CadastrarPet cadastrarPet = new CadastrarPet();
+				frame.setContentPane(cadastrarPet);
+				frame.revalidate();
 			}
 		});
-		mnProcedimento.add(mntmCadastrar_2);
+		mnPet.add(mntmCadastroPet);
 
-		JMenuItem mntmConsultar_3 = new JMenuItem("Consultar");
-		mntmConsultar_3.addActionListener(new ActionListener() {
+		JMenuItem mntmConsultarPet = new JMenuItem("Consultar");
+		mntmConsultarPet.setFont(new Font("Segoe UI", Font.PLAIN, 19));
+		mnPet.add(mntmConsultarPet);
+
+		JMenu mnProcedimentos = new JMenu("Procedimentos");
+		mnProcedimentos.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icones/png/004-calendar.png")));
+		mnProcedimentos.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		mnProcedimentos.setForeground(Color.BLACK);
+		menuBar.add(mnProcedimentos);
+
+		JMenuItem mntmCadastroProcedimento = new JMenuItem("Cadastro");
+		mntmCadastroProcedimento.setFont(new Font("Segoe UI", Font.PLAIN, 19));
+		mntmCadastroProcedimento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				contentPane = new ConsultarProcedimento();
-				setContentPane(contentPane);
-				revalidate();
+				CadastrarProcedimento cadastrarProcedimento = new CadastrarProcedimento();
+				frame.setContentPane(cadastrarProcedimento);
+				frame.revalidate();
+
 			}
 		});
-		mnProcedimento.add(mntmConsultar_3);
+		mnProcedimentos.add(mntmCadastroProcedimento);
+
+		JMenuItem mntmConsultaProcedimento = new JMenuItem("Consulta");
+		mntmConsultaProcedimento.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConsultarProcedimento consultarProcedimento = new ConsultarProcedimento();
+				frame.setContentPane(consultarProcedimento);
+				frame.revalidate();
+			}
+		});
+		mntmConsultaProcedimento.setFont(new Font("Segoe UI", Font.PLAIN, 19));
+		mnProcedimentos.add(mntmConsultaProcedimento);
 
 		JMenu mnRelatrio = new JMenu("Relat\u00F3rio");
-		mnRelatrio.setForeground(Color.BLACK);
+		mnRelatrio.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icones/png/006-newspaper.png")));
 		mnRelatrio.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		mnRelatrio.setForeground(Color.BLACK);
 		menuBar.add(mnRelatrio);
 
 		JMenuItem mntmGerarRelatrio = new JMenuItem("Gerar Relat\u00F3rio");
+		mntmGerarRelatrio.setFont(new Font("Segoe UI", Font.PLAIN, 19));
 		mnRelatrio.add(mntmGerarRelatrio);
 
 		JMenu mnSobre = new JMenu("Sobre");
-		mnSobre.setForeground(Color.BLACK);
+		mnSobre.setIcon(
+				new ImageIcon(TelaPrincipal.class.getResource("/icones/png/007-questions-about-abecedary.png")));
 		mnSobre.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		mnSobre.setForeground(Color.BLACK);
 		menuBar.add(mnSobre);
 	}
 }
