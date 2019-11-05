@@ -45,7 +45,7 @@ public class TelaPrincipal {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.GREEN);
-		frame.setBounds(100, 100, 1066, 615);
+		frame.setBounds(100, 100, 987, 669);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -127,6 +127,14 @@ public class TelaPrincipal {
 		mnPet.add(mntmCadastroPet);
 
 		JMenuItem mntmConsultarPet = new JMenuItem("Consultar");
+		mntmConsultarPet.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ConsultarPet consultarPet = new ConsultarPet();
+				frame.setContentPane(consultarPet);
+				frame.revalidate();
+
+			}
+		});
 		mntmConsultarPet.setFont(new Font("Segoe UI", Font.PLAIN, 19));
 		mnPet.add(mntmConsultarPet);
 

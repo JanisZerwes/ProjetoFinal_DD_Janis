@@ -4,43 +4,143 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
+import Controller.ControllerCliente;
+import model.vo.Cliente;
+
 public class CadastrarCliente extends JPanel {
-	private JTextField txtCliente;
+	private JTextField txtNome;
+	private JTextField txtSobrenome;
+	private JTextField txtSexo;
+	private JTextField txtCpf;
+	private JTextField txtTelefone;
+	private JTextField txtEmail;
+	private JTextField txtEndereco;
+	String[] adimplente = new String[2];
+	private JComboBox cbAdimplente;
+	private Cliente novoCliente;
+	private JComboBox cbAdimplente_1;
 
 	/**
 	 * Create the panel.
 	 */
 	public CadastrarCliente() {
+
 		setBorder(new LineBorder(Color.GREEN, 4));
 		setLayout(null);
 
-		JLabel lblIdCliente = new JLabel("ID Cliente");
-		lblIdCliente.setBounds(33, 64, 56, 16);
-		add(lblIdCliente);
+		JLabel lblNome = new JLabel("Nome:");
+		lblNome.setBounds(12, 38, 38, 16);
+		add(lblNome);
 
-		txtCliente = new JTextField();
-		txtCliente.setBounds(154, 61, 116, 22);
-		add(txtCliente);
-		txtCliente.setColumns(10);
+		txtNome = new JTextField();
+		txtNome.setBounds(86, 35, 116, 22);
+		add(txtNome);
+		txtNome.setColumns(10);
 
-		JButton btnCadastrar = new JButton("Cadastrar");
-		btnCadastrar.addActionListener(new ActionListener() {
+		JLabel lblSobrenome = new JLabel("Sobrenome:");
+		lblSobrenome.setBounds(12, 85, 71, 16);
+		add(lblSobrenome);
+
+		txtSobrenome = new JTextField();
+		txtSobrenome.setBounds(86, 82, 116, 22);
+		add(txtSobrenome);
+		txtSobrenome.setColumns(10);
+
+		JLabel lblSexo = new JLabel("Sexo:");
+		lblSexo.setBounds(12, 182, 33, 16);
+		add(lblSexo);
+
+		txtSexo = new JTextField();
+		txtSexo.setBounds(86, 179, 116, 22);
+		add(txtSexo);
+		txtSexo.setColumns(10);
+
+		JLabel lblCpf = new JLabel("Cpf:");
+		lblCpf.setBounds(12, 134, 24, 16);
+		add(lblCpf);
+
+		txtCpf = new JTextField();
+		txtCpf.setBounds(86, 131, 116, 22);
+		add(txtCpf);
+		txtCpf.setColumns(10);
+
+		JLabel lblTelefone = new JLabel("Telefone:");
+		lblTelefone.setBounds(12, 286, 55, 16);
+		add(lblTelefone);
+
+		txtTelefone = new JTextField();
+		txtTelefone.setBounds(86, 283, 116, 22);
+		add(txtTelefone);
+		txtTelefone.setColumns(10);
+
+		txtEmail = new JTextField();
+		txtEmail.setBounds(342, 283, 116, 22);
+		add(txtEmail);
+		txtEmail.setColumns(10);
+
+		JLabel lblEmail = new JLabel("E-mail:");
+		lblEmail.setBounds(289, 286, 41, 16);
+		add(lblEmail);
+
+		JLabel lblAdimplente = new JLabel("Adimplente:");
+		lblAdimplente.setBounds(482, 41, 69, 16);
+		add(lblAdimplente);
+
+		adimplente[0] = "Sim";
+		adimplente[1] = "Não";
+		JComboBox cbAdimplente = new JComboBox();
+		cbAdimplente_1 = new JComboBox(adimplente);
+		cbAdimplente_1.setBounds(563, 38, 49, 22);
+		cbAdimplente_1.setModel(new DefaultComboBoxModel(new String[] { "Sim", "Não" }));
+		add(cbAdimplente_1);
+
+		JLabel lblEndereo = new JLabel("Endere\u00E7o:");
+		lblEndereo.setBounds(12, 231, 58, 16);
+		add(lblEndereo);
+
+		txtEndereco = new JTextField();
+		txtEndereco.setBounds(86, 228, 116, 22);
+		add(txtEndereco);
+		txtEndereco.setColumns(10);
+
+		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.setBounds(543, 282, 69, 25);
+		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnCadastrar.setBounds(33, 276, 97, 25);
-		add(btnCadastrar);
+				ControllerCliente controllerCliente = new ControllerCliente();
 
-		JButton btnVoltar = new JButton("Voltar");
-		btnVoltar.setBounds(33, 337, 97, 25);
-		add(btnVoltar);
+				String nomeDigitado = txtNome.getText();
+				String sobrenomeDigitado = txtSobrenome.getText();
+				String enderecoDigitado = txtEndereco.getText();
+				String sexoDigitado = txtSexo.getText();
+				String cpfDigitado = txtCpf.getText().replace("-", "").replace(".", "");
+				String telefoneDigitado = txtTelefone.getText();
+				String emailDigitado = txtEmail.getText();
+
+				String mensagem = controllerCliente.validarCamposSalvar(nomeDigitado, sobrenomeDigitado,
+						enderecoDigitado, sexoDigitado, cpfDigitado, telefoneDigitado, emailDigitado);
+				if (mensagem.isEmpty()) {
+					novoCliente = new Cliente(0, nomeDigitado, sobrenomeDigitado, enderecoDigitado, sexoDigitado,
+							cpfDigitado, telefoneDigitado, emailDigitado, null);
+					novoCliente = controllerCliente.salva(novoCliente);
+
+				} else {
+					JOptionPane.showMessageDialog(null, mensagem, "Atenção", JOptionPane.WARNING_MESSAGE);
+				}
+
+			}
+
+		});
+		add(btnSalvar);
 
 	}
-
 }
