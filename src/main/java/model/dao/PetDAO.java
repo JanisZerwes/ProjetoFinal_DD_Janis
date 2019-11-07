@@ -10,11 +10,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import model.dto.RelatorioPet;
 import model.vo.Pet;
 
 public class PetDAO {
 
-	DateTimeFormatter dataFormatter = DateTimeFormatter.ofPattern(" aaaa-MM-dd ");
+	DateTimeFormatter dataFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	public Pet salvar(Pet novoPet) {
 		Connection conexao = Banco.getConnection();
@@ -50,6 +51,7 @@ public class PetDAO {
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
 		ArrayList<Pet> petsVO = new ArrayList<Pet>();
+
 		String query = "SELECT idPet, nome, porte, peso, raca, dtnascimento, sexo FROM Pet";
 		try {
 
@@ -65,6 +67,8 @@ public class PetDAO {
 				petVO.setDtNascimento(LocalDate.parse(resultado.getString(6), dataFormatter));
 				petVO.setSexo(resultado.getString(7));
 
+				petsVO.add(petVO);
+
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao executar a Query de Consulta de Pets.");
@@ -77,4 +81,44 @@ public class PetDAO {
 		return petsVO;
 	}
 
+	public ArrayList<RelatorioPet> consultarRelatorioPet() {
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		ArrayList<RelatorioPet> relatorio = new ArrayList<RelatorioPet>();
+
+		String query = "SELECT p.idPet, p.nome, p.porte, p.peso, p.raca, p.especie, p.dtnascimento, p.sexo, "
+				+ "c.nome as dono,  count(proc.idprocedimento) as contagem, sum(proc.valor) as total "
+				+ "FROM Pet as p inner join cliente as c on p.idcliente = c.idcliente inner join procedimento as proc on proc.idpet = p.idpet";
+		try {
+
+			resultado = stmt.executeQuery(query);
+			while (resultado.next()) {
+				RelatorioPet relatorioPet = new RelatorioPet();
+
+				relatorioPet.setIdPet(Integer.parseInt(resultado.getString(1)));
+				relatorioPet.setNome(resultado.getString(2));
+				relatorioPet.setPorte(resultado.getString(3));
+				relatorioPet.setPeso(resultado.getDouble(4));
+				relatorioPet.setRaca(resultado.getString(5));
+				relatorioPet.setEspecie(resultado.getString(6));
+				relatorioPet.setDtNascimento(LocalDate.parse(resultado.getString(7), dataFormatter));
+				relatorioPet.setSexo(resultado.getString(8));
+				relatorioPet.setCliente(resultado.getString(9));
+				relatorioPet.setContagemProcedimentos(resultado.getInt(10));
+				relatorioPet.setValorTotalProcedimentos(resultado.getDouble(11));
+
+				relatorio.add(relatorioPet);
+
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao executar a Query de Consulta de Pets.");
+			System.out.println("Erro: " + e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return relatorio;
+	}
 }

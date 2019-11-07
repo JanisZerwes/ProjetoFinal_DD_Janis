@@ -118,6 +118,7 @@ public class CadastrarCliente extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				ControllerCliente controllerCliente = new ControllerCliente();
 
+				;
 				String nomeDigitado = txtNome.getText();
 				String sobrenomeDigitado = txtSobrenome.getText();
 				String enderecoDigitado = txtEndereco.getText();

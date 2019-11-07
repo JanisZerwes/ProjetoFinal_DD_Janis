@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import model.bo.ClienteBO;
 import model.bo.PetBO;
+import model.dao.PetDAO;
+import model.dto.GeradorDePlanilha;
+import model.dto.RelatorioPet;
 import model.vo.Cliente;
 import model.vo.Pet;
 
@@ -74,7 +77,19 @@ public class ControllerPet {
 	}
 
 	public ArrayList<Pet> consultarTodosPetController() {
+
 		PetBO petBO = new PetBO();
 		return petBO.consultarPetsBO();
+	}
+
+	public void gerarRelatorio(ArrayList<Pet> petsConsultados, String caminhoEscolhido) {
+		PetBO petBO = new PetBO();
+		petBO.gerarRelatorio(petsConsultados, caminhoEscolhido);
+	}
+
+	public void gerarRelatorioCompleto(ArrayList<RelatorioPet> petsConsultados, String caminhoEscolhido) {
+		PetDAO petDAO = new PetDAO();
+		GeradorDePlanilha gerador = new GeradorDePlanilha();
+		gerador.gerarPlanilhaPetCompleta(petsConsultados, caminhoEscolhido);
 	}
 }

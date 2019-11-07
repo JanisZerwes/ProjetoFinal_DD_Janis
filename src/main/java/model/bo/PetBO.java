@@ -3,13 +3,13 @@ package model.bo;
 import java.util.ArrayList;
 
 import model.dao.PetDAO;
+import model.dto.GeradorDePlanilha;
 import model.vo.Pet;
 
 public class PetBO {
 
-	public static PetDAO dao = new PetDAO();
-
 	public static Pet salvar(Pet novoPet) {
+		PetDAO dao = new PetDAO();
 		return dao.salvar(novoPet);
 	}
 
@@ -29,23 +29,36 @@ public class PetBO {
 	}
 
 	public ArrayList<Pet> consultarPetsBO() {
-		// TODO Auto-generated method stub
-		return null;
+
+		PetDAO petDAO = new PetDAO();
+
+		ArrayList<Pet> petVO = petDAO.consultarTodosPet();
+
+		if (petVO.isEmpty()) {
+			System.out.println("\n Lista de pets está vazia.");
+		}
+
+		return petVO;
 	}
 
 	public Pet consultarPetBO(Pet petVO) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+//
+//	public ArrayList<Pet> consultarTodosPetController() {
+//		PetDAO petDAO = new PetDAO();
+//		ArrayList<Pet> petVO = petDAO.consultarTodosPet();
+//		if (petVO.isEmpty()) {
+//			System.out.println("\n Lista de pets está vazia.");
+//		}
+//
+//		return petVO;
+//	}
 
-	public ArrayList<Pet> consultarTodosPetController() {
-		PetDAO petDAO = new PetDAO();
-		ArrayList<Pet> petVO = petDAO.consultarTodosPet();
-		if (petVO.isEmpty()) {
-			System.out.println("\n Lista de pets está vazia.");
-		}
-
-		return petVO;
+	public void gerarRelatorio(ArrayList<Pet> petsConsultados, String caminhoEscolhido) {
+		GeradorDePlanilha gerador = new GeradorDePlanilha();
+		gerador.gerarPlanilhaPet(petsConsultados, caminhoEscolhido);
 	}
 
 }

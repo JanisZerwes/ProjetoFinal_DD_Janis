@@ -7,12 +7,15 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Controller.ControllerPet;
+import model.dao.PetDAO;
+import model.dto.RelatorioPet;
 import model.vo.Pet;
 
 public class ConsultarPet extends JPanel {
@@ -74,6 +77,33 @@ public class ConsultarPet extends JPanel {
 		JButton btnAtualizar = new JButton("Atualizar");
 		btnAtualizar.setBounds(188, 328, 97, 25);
 		add(btnAtualizar);
+
+		JButton btnGerarXls = new JButton("Gerar XLS");
+		btnGerarXls.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser jfc = new JFileChooser();
+				jfc.setDialogTitle("Salvar relatório como...");
+
+				int resultado = jfc.showSaveDialog(null);
+				if (resultado == JFileChooser.APPROVE_OPTION) {
+					String caminhoEscolhido = jfc.getSelectedFile().getAbsolutePath();
+
+					ControllerPet controllerPet = new ControllerPet();
+					ArrayList<Pet> petsConsultados = controllerPet.consultarTodosPetController();
+
+					PetDAO dao = new PetDAO();
+
+					ArrayList<RelatorioPet> petsCompleto = dao.consultarRelatorioPet();
+
+					// controllerPet.gerarRelatorio(petsConsultados, caminhoEscolhido);
+
+					controllerPet.gerarRelatorioCompleto(petsCompleto, caminhoEscolhido);
+
+				}
+			}
+		});
+		btnGerarXls.setBounds(532, 365, 97, 25);
+		add(btnGerarXls);
 
 	}
 }
