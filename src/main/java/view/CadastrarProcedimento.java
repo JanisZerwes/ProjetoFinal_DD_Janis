@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -23,6 +24,7 @@ public class CadastrarProcedimento extends JPanel {
 	private JTextField txtFormaPagamento;
 	private JTextField txtSituacaoPagamento;
 	private Procedimento novoProcedimento;
+	String[] tipo = new String[4];
 
 	/**
 	 * Create the panel.
@@ -106,18 +108,27 @@ public class CadastrarProcedimento extends JPanel {
 					novoProcedimento = controllerProcedimento.salva(novoProcedimento);
 				} else {
 					JOptionPane.showMessageDialog(null, mensagem, "Atenção", JOptionPane.WARNING_MESSAGE);
+
 				}
 			}
 		});
-		btnSalvar.setBounds(439, 406, 97, 25);
+		btnSalvar.setBounds(458, 406, 129, 25);
 		add(btnSalvar);
 
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(458, 51, 91, 22);
-		add(comboBox);
+		tipo[0] = "Cartão à Vista";
+		tipo[1] = "Cartão Parcelado";
+		tipo[2] = "Dinheiro à Vista";
+		tipo[3] = "Dinheiro Parcelado";
+		JComboBox cbTipo = new JComboBox();
+
+		cbTipo = new JComboBox(tipo);
+		cbTipo.setBounds(458, 51, 129, 22);
+		cbTipo.setModel(new DefaultComboBoxModel(
+				new String[] { "Cartão à Vista", "Cartão Parcelado", "Dinheiro à Vista", "Dinheiro Parcelado" }));
+		add(cbTipo);
 
 		JLabel lblTipo = new JLabel("Tipo:");
-		lblTipo.setBounds(407, 54, 56, 16);
+		lblTipo.setBounds(367, 54, 56, 16);
 		add(lblTipo);
 
 	}

@@ -35,6 +35,7 @@ public class ClienteBO {
 	}
 
 	public ArrayList<Cliente> consultarClientesBO() {
+
 		ClienteDAO clienteDAO = new ClienteDAO();
 		ArrayList<Cliente> clientesVO = clienteDAO.consultarTodos();
 		if (clientesVO.isEmpty()) {

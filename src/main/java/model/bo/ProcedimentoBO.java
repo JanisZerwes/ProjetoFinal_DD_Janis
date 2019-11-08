@@ -2,6 +2,7 @@ package model.bo;
 
 import java.util.ArrayList;
 
+import model.dao.ProcedimentoDAO;
 import model.vo.Procedimento;
 
 public class ProcedimentoBO {
@@ -22,8 +23,15 @@ public class ProcedimentoBO {
 	}
 
 	public ArrayList<Procedimento> consultarProcedimentoBO() {
-		// TODO Auto-generated method stub
-		return null;
+		ProcedimentoDAO procedimentoDAO = new ProcedimentoDAO();
+
+		ArrayList<Procedimento> procedimentoVO = procedimentoDAO.consultarTodosProcedimentos();
+
+		if (procedimentoVO.isEmpty()) {
+			System.out.println("\n Lista de procedimentos está vazia.");
+		}
+
+		return procedimentoVO;
 	}
 
 	public Procedimento consultarProcedimentosBO(Procedimento procedimentoVO) {

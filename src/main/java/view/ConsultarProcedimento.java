@@ -3,6 +3,7 @@ package view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -10,6 +11,9 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+
+import Controller.ControllerProcedimento;
+import model.vo.Procedimento;
 
 public class ConsultarProcedimento extends JPanel {
 	private JTable tblProcedimento;
@@ -34,6 +38,23 @@ public class ConsultarProcedimento extends JPanel {
 		JButton btnNewButton = new JButton("Consultar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				ControllerProcedimento consultarTodosProcedimentosController = new ControllerProcedimento();
+				ArrayList<Procedimento> procedimentoTabela = consultarTodosProcedimentosController
+						.consultarTodosProcedimentosController();
+
+				DefaultTableModel model = (DefaultTableModel) tblProcedimento.getModel();
+				for (int i = 0; i < procedimentoTabela.size(); i++) {
+					String[] novaLinha = new String[6];
+					System.out.println(procedimentoTabela.get(i).getIdProcedimento());
+					novaLinha[0] = procedimentoTabela.get(i).getIdProcedimento() + "";
+					novaLinha[1] = procedimentoTabela.get(i).getTitulo();
+					novaLinha[2] = procedimentoTabela.get(i).getDtEntrada() + "";
+					novaLinha[3] = procedimentoTabela.get(i).getDtSaida() + "";
+					novaLinha[4] = procedimentoTabela.get(i).getValor() + "";
+					novaLinha[5] = procedimentoTabela.get(i).getFormaPagamento();
+					novaLinha[6] = procedimentoTabela.get(i).getSituacaoPagamento() + "";
+					model.addRow(novaLinha);
+				}
 			}
 		});
 		btnNewButton.setBounds(26, 393, 97, 25);

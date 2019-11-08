@@ -48,6 +48,7 @@ public class ConsultarCliente extends JPanel {
 				DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
 				for (int i = 0; i < clienteTabela.size(); i++) {
 					String[] novaLinha = new String[9];
+
 					System.out.println(clienteTabela.get(i).getIdCliente());
 					novaLinha[0] = clienteTabela.get(i).getIdCliente() + "";
 					novaLinha[1] = clienteTabela.get(i).getNome();

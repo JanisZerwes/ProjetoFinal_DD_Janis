@@ -30,11 +30,11 @@ public class ConsultarPet extends JPanel {
 
 		tblPet = new JTable();
 		tblPet.setForeground(Color.GREEN);
-		tblPet.setBounds(12, 60, 652, 220);
+		tblPet.setBounds(12, 60, 720, 220);
 		add(tblPet);
 
 		JButton btnExcluir = new JButton("Excluir");
-		btnExcluir.setBounds(532, 328, 97, 25);
+		btnExcluir.setBounds(492, 328, 97, 25);
 		add(btnExcluir);
 
 		final JTable tblPet;
@@ -67,15 +67,15 @@ public class ConsultarPet extends JPanel {
 				}
 			}
 		});
-		btnConsultar.setBounds(38, 328, 97, 25);
+		btnConsultar.setBounds(22, 328, 97, 25);
 		add(btnConsultar);
 
 		JButton btnAdicionar = new JButton("Adicionar");
-		btnAdicionar.setBounds(351, 328, 97, 25);
+		btnAdicionar.setBounds(328, 328, 97, 25);
 		add(btnAdicionar);
 
 		JButton btnAtualizar = new JButton("Atualizar");
-		btnAtualizar.setBounds(188, 328, 97, 25);
+		btnAtualizar.setBounds(162, 328, 97, 25);
 		add(btnAtualizar);
 
 		JButton btnGerarXls = new JButton("Gerar XLS");
@@ -102,7 +102,7 @@ public class ConsultarPet extends JPanel {
 				}
 			}
 		});
-		btnGerarXls.setBounds(532, 365, 97, 25);
+		btnGerarXls.setBounds(635, 328, 97, 25);
 		add(btnGerarXls);
 
 	}

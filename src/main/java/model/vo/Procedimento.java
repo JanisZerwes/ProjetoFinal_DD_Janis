@@ -1,14 +1,14 @@
 package model.vo;
 
-import java.text.DateFormat;
+import java.time.LocalDate;
 
 public class Procedimento {
 	private int idProcedimento;
 	private Pet pet;
 	private Veterinario veterinario;
 	private String titulo;
-	private DateFormat dtEntrada;
-	private DateFormat dtSaida;
+	private LocalDate dtEntrada;
+	private LocalDate dtSaida;
 	private double valor;
 	private String formaPagamento;
 	private boolean situacaoPagamento;
@@ -19,8 +19,8 @@ public class Procedimento {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Procedimento(int idProcedimento, Pet pet, Veterinario veterinario, String titulo, DateFormat dtEntrada,
-			DateFormat dtSaida, double valor, String formaPagamento, boolean situacaoPagamento, Tipo tipo) {
+	public Procedimento(int idProcedimento, Pet pet, Veterinario veterinario, String titulo, LocalDate dtEntrada,
+			LocalDate dtSaida, double valor, String formaPagamento, boolean situacaoPagamento, Tipo tipo) {
 		super();
 		this.idProcedimento = idProcedimento;
 		this.pet = pet;
@@ -71,20 +71,20 @@ public class Procedimento {
 		this.titulo = titulo;
 	}
 
-	public DateFormat getDtEntrada() {
+	public LocalDate getDtEntrada() {
 		return dtEntrada;
 	}
 
 //oie
-	public void setDtEntrada(DateFormat dtEntrada) {
+	public void setDtEntrada(LocalDate dtEntrada) {
 		this.dtEntrada = dtEntrada;
 	}
 
-	public DateFormat getDtSaida() {
+	public LocalDate getDtSaida() {
 		return dtSaida;
 	}
 
-	public void setDtSaida(DateFormat dtSaida) {
+	public void setDtSaida(LocalDate dtSaida) {
 		this.dtSaida = dtSaida;
 	}
 
@@ -105,6 +105,10 @@ public class Procedimento {
 	}
 
 	public boolean isSituacaoPagamento() {
+		return situacaoPagamento;
+	}
+
+	public Boolean getSituacaoPagamento() {
 		return situacaoPagamento;
 	}
 
