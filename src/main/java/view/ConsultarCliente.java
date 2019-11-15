@@ -72,28 +72,15 @@ public class ConsultarCliente extends JPanel {
 		JButton btnAtualizar = new JButton("Atualizar");
 		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ControllerCliente controller = new ControllerCliente();
+				Object idSelecionado = tblClientes.getModel().getValueAt(tblClientes.getSelectedRow(), 0);
 
-//				if (novoCliente != null && novoCliente.getIdCliente() > 0) {
-//					// dadosNovoCliente =
-//					// controller.consultarClienteController(novoCliente.getIdCliente());
-//				}
+				Cliente clienteSelecionado = new Cliente();
+				clienteSelecionado.setIdCliente(Integer.valueOf((String) idSelecionado));
 
-				// limparTabela();
+				AtualizarCliente atualizarCliente = new AtualizarCliente();
+				frame.setContentPane(atualizarCliente);
+				frame.revalidate();
 
-				DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
-				for (Cliente cliente : dadosNovoCliente) {
-					String[] novaLinha = new String[6];
-					novaLinha[0] = cliente.getNome();
-					novaLinha[1] = cliente.getSobrenome();
-					novaLinha[2] = cliente.getEndereco();
-					novaLinha[3] = cliente.getSexo();
-					novaLinha[4] = cliente.getCpf();
-					novaLinha[5] = cliente.getTelefone();
-					novaLinha[6] = cliente.getEmail();
-
-					model.addRow(novaLinha);
-				}
 			}
 		});
 		btnAtualizar.setBounds(141, 340, 97, 25);

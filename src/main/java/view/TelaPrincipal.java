@@ -80,7 +80,7 @@ public class TelaPrincipal {
 		});
 		mnCliente.add(mntmCosultaCliente);
 
-		JMenu mnVeterinrio = new JMenu("Veterin\u00E1rio");
+		JMenu mnVeterinrio = new JMenu("Veterinário");
 		mnVeterinrio.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icones/png/icons8-m\u00E9dico-80.png")));
 		mnVeterinrio.setForeground(Color.BLACK);
 		mnVeterinrio.setFont(new Font("Segoe UI", Font.BOLD, 20));

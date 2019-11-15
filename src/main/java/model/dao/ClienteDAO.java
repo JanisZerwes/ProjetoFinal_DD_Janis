@@ -56,6 +56,7 @@ public class ClienteDAO implements Base<Cliente> {
 
 	public Cliente consultarPorId(int id) {
 		// TODO Auto-generated method stub
+
 		return null;
 	}
 
@@ -72,8 +73,6 @@ public class ClienteDAO implements Base<Cliente> {
 			while (resultado.next()) {
 				Cliente clienteVO = new Cliente();
 				clienteVO.setIdCliente(Integer.parseInt(resultado.getString(1)));
-				System.out.println("O resultado da busca no banco. ID = " + resultado.getString(1));
-				System.out.println("ID CLIENTE no objeto =  " + clienteVO.getIdCliente());
 				clienteVO.setNome(resultado.getString(2));
 				clienteVO.setSobrenome(resultado.getString(3));
 				clienteVO.setEndereco(resultado.getString(4));

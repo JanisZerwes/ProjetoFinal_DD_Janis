@@ -92,7 +92,7 @@ public class CadastrarPet extends JPanel {
 		add(txtRaca);
 		txtRaca.setColumns(10);
 
-		final JRadioButton rbFemea = new JRadioButton("F\u00EAmea");
+		final JRadioButton rbFemea = new JRadioButton("Fêmea");
 		rbFemea.setBounds(12, 233, 127, 25);
 		add(rbFemea);
 

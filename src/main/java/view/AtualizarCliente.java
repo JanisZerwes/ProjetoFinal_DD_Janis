@@ -17,7 +17,8 @@ import javax.swing.border.LineBorder;
 import Controller.ControllerCliente;
 import model.vo.Cliente;
 
-public class CadastrarCliente extends JPanel {
+public class AtualizarCliente extends JPanel {
+
 	private JTextField txtNome;
 	private JTextField txtSobrenome;
 	private JTextField txtCpf;
@@ -29,10 +30,7 @@ public class CadastrarCliente extends JPanel {
 	private Cliente novoCliente;
 	private JComboBox cbAdimplente_1;
 
-	/**
-	 * Create the panel.
-	 */
-	public CadastrarCliente() {
+	public AtualizarCliente() {
 
 		setBorder(new LineBorder(Color.GREEN, 4));
 		setLayout(null);
@@ -107,15 +105,15 @@ public class CadastrarCliente extends JPanel {
 		add(txtEndereco);
 		txtEndereco.setColumns(10);
 
-		final JRadioButton rbFemenino = new JRadioButton("Femenino");
-		rbFemenino.setBounds(86, 178, 127, 25);
-		add(rbFemenino);
+		final JRadioButton rbFeminino = new JRadioButton("Feminino");
+		rbFeminino.setBounds(86, 178, 127, 25);
+		add(rbFeminino);
 
 		final JRadioButton rbMasculino = new JRadioButton("Masculino");
 		rbMasculino.setBounds(248, 178, 127, 25);
 		add(rbMasculino);
 
-		JButton btnSalvar = new JButton("Salvar");
+		JButton btnSalvar = new JButton("Atualizar");
 		btnSalvar.setBounds(514, 282, 98, 25);
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -130,7 +128,7 @@ public class CadastrarCliente extends JPanel {
 				String telefoneDigitado = txtTelefone.getText();
 				String emailDigitado = txtEmail.getText();
 
-				if (rbFemenino.isSelected()) {
+				if (rbFeminino.isSelected()) {
 					sexoDigitado = "M";
 				}
 
@@ -153,6 +151,6 @@ public class CadastrarCliente extends JPanel {
 
 		});
 		add(btnSalvar);
-
 	}
+
 }
