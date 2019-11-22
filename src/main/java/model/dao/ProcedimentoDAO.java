@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import model.vo.Cliente;
 import model.vo.Procedimento;
 
 public class ProcedimentoDAO {
@@ -31,8 +32,8 @@ public class ProcedimentoDAO {
 				procedimentoVO.setDtEntrada(LocalDate.parse(resultado.getString(3), dataFormatter));
 				procedimentoVO.setDtSaida(LocalDate.parse(resultado.getString(4), dataFormatter));
 				procedimentoVO.setValor(resultado.getDouble(5));
-				procedimentoVO.setFormaPagamento(resultado.getString(2));
-				procedimentoVO.setSituacaoPagamento(resultado.getBoolean(2));
+				procedimentoVO.setFormaPagamento(resultado.getString(6));
+				procedimentoVO.setSituacaoPagamento(resultado.getBoolean(7));
 
 				procedimentosVO.add(procedimentoVO);
 
@@ -46,6 +47,45 @@ public class ProcedimentoDAO {
 			Banco.closeConnection(conn);
 		}
 		return procedimentosVO;
+	}
+
+	public Procedimento consultarProcedimentoPorID(int idProcedimento) {
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+
+		ResultSet resultado = null;
+		Procedimento procedimentoVO = new Procedimento();
+		String query = "SELECT idveterinario, titulo, descricao, valor, dtentrada, dtsaida, formapagamento, situacaopagamento FROM procedimento WHERE IDPROCEDIMENTO = "
+				+ idProcedimento;
+		try {
+			resultado = stmt.executeQuery(query);
+
+			if (resultado.next()) {
+
+				procedimentoVO.setIdProcedimento(Integer.parseInt(resultado.getString(1)));
+				procedimentoVO.setTitulo(resultado.getString(2));
+				procedimentoVO.setDtEntrada(LocalDate.parse(resultado.getString(3), dataFormatter));
+				procedimentoVO.setDtSaida(LocalDate.parse(resultado.getString(4), dataFormatter));
+				procedimentoVO.setValor(resultado.getDouble(5));
+				procedimentoVO.setFormaPagamento(resultado.getString(6));
+				procedimentoVO.setSituacaoPagamento(resultado.getBoolean(7));
+
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Erro ao executar a Query de Atualização de Procedimentos.");
+			System.out.println("Erro: " + e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return procedimentoVO;
+	}
+
+	public Cliente consultarPorId(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

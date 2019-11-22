@@ -35,8 +35,9 @@ public class ProcedimentoBO {
 	}
 
 	public Procedimento consultarProcedimentosBO(Procedimento procedimentoVO) {
-		// TODO Auto-generated method stub
-		return null;
+		ProcedimentoDAO procedimentoDAO = new ProcedimentoDAO();
+		procedimentoVO = procedimentoDAO.consultarProcedimentoPorID(procedimentoVO.getIdProcedimento());
+		return procedimentoVO;
 	}
 
 }
