@@ -30,8 +30,9 @@ public class ClienteBO {
 //	}
 
 	public Cliente consultarClienteBO(Cliente clienteVO) {
-		// TODO Auto-generated method stub
-		return null;
+		ClienteDAO clienteDAO = new ClienteDAO();
+		clienteVO = clienteDAO.consultarClientePorID(clienteVO.getIdCliente());
+		return clienteVO;
 	}
 
 	public ArrayList<Cliente> consultarClientesBO() {
@@ -44,8 +45,9 @@ public class ClienteBO {
 		return clientesVO;
 	}
 
-	public void excluirClienteBO(Cliente clienteVO) {
-		// TODO Auto-generated method stub
+	public boolean excluirClienteBO(Cliente clienteVO) {
+		ClienteDAO clienteDAO = new ClienteDAO();
+		return clienteDAO.excluir(clienteVO.getIdCliente());
 
 	}
 
@@ -55,7 +57,8 @@ public class ClienteBO {
 	}
 
 	public void atualizarClienteBO(Cliente clienteVO) {
-		// TODO Auto-generated method stub
+		ClienteDAO clienteDAO = new ClienteDAO();
+		clienteDAO.alterar(clienteVO);
 
 	}
 

@@ -1,24 +1,26 @@
 package view;
 
-import java.awt.Color;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
+import javax.swing.border.EmptyBorder;
 
 import Controller.ControllerCliente;
 import model.vo.Cliente;
 
-public class AtualizarCliente extends JPanel {
+public class AtualizarClienteFrame extends JFrame {
 
+	private JPanel contentPane;
 	private JTextField txtNome;
 	private JTextField txtSobrenome;
 	private JTextField txtCpf;
@@ -30,63 +32,84 @@ public class AtualizarCliente extends JPanel {
 	private Cliente novoCliente;
 	private JComboBox cbAdimplente_1;
 
-	public AtualizarCliente() {
+	/**
+	 * Create the frame.
+	 * 
+	 * @param clienteSelecionado
+	 * 
+	 * @param clienteSelecionado
+	 */
 
-		setBorder(new LineBorder(Color.GREEN, 4));
-		setLayout(null);
+	public AtualizarClienteFrame(Cliente clienteSelecionado) {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 691, 414);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+
+		ControllerCliente controladoraCliente = new ControllerCliente();
+
+		clienteSelecionado = controladoraCliente.consultarClienteController(clienteSelecionado);
+		getContentPane().setLayout(null);
 
 		JLabel lblNome = new JLabel("Nome:");
 		lblNome.setBounds(12, 38, 38, 16);
-		add(lblNome);
+		getContentPane().add(lblNome);
 
 		txtNome = new JTextField();
 		txtNome.setBounds(86, 35, 116, 22);
-		add(txtNome);
+		getContentPane().add(txtNome);
 		txtNome.setColumns(10);
+		txtNome.setText(clienteSelecionado.getNome());
 
 		JLabel lblSobrenome = new JLabel("Sobrenome:");
 		lblSobrenome.setBounds(12, 85, 71, 16);
-		add(lblSobrenome);
+		getContentPane().add(lblSobrenome);
 
 		txtSobrenome = new JTextField();
 		txtSobrenome.setBounds(86, 82, 116, 22);
-		add(txtSobrenome);
+		getContentPane().add(txtSobrenome);
 		txtSobrenome.setColumns(10);
+		txtSobrenome.setText(clienteSelecionado.getSobrenome());
 
 		JLabel lblSexo = new JLabel("Sexo:");
 		lblSexo.setBounds(12, 182, 33, 16);
-		add(lblSexo);
+		getContentPane().add(lblSexo);
 
 		JLabel lblCpf = new JLabel("Cpf:");
 		lblCpf.setBounds(12, 134, 24, 16);
-		add(lblCpf);
+		getContentPane().add(lblCpf);
 
 		txtCpf = new JTextField();
 		txtCpf.setBounds(86, 131, 116, 22);
-		add(txtCpf);
+		getContentPane().add(txtCpf);
 		txtCpf.setColumns(10);
+		txtCpf.setText(clienteSelecionado.getCpf());
 
 		JLabel lblTelefone = new JLabel("Telefone:");
 		lblTelefone.setBounds(12, 286, 55, 16);
-		add(lblTelefone);
+		getContentPane().add(lblTelefone);
 
 		txtTelefone = new JTextField();
 		txtTelefone.setBounds(86, 283, 116, 22);
-		add(txtTelefone);
+		getContentPane().add(txtTelefone);
 		txtTelefone.setColumns(10);
+		txtTelefone.setText(clienteSelecionado.getTelefone());
 
 		txtEmail = new JTextField();
 		txtEmail.setBounds(342, 283, 116, 22);
-		add(txtEmail);
+		getContentPane().add(txtEmail);
 		txtEmail.setColumns(10);
+		txtEmail.setText(clienteSelecionado.getEmail());
 
 		JLabel lblEmail = new JLabel("E-mail:");
 		lblEmail.setBounds(289, 286, 41, 16);
-		add(lblEmail);
+		getContentPane().add(lblEmail);
 
 		JLabel lblAdimplente = new JLabel("Adimplente:");
 		lblAdimplente.setBounds(342, 38, 109, 16);
-		add(lblAdimplente);
+		getContentPane().add(lblAdimplente);
 
 		adimplente[0] = "Sim";
 		adimplente[1] = "Não";
@@ -94,24 +117,40 @@ public class AtualizarCliente extends JPanel {
 		cbAdimplente_1 = new JComboBox(adimplente);
 		cbAdimplente_1.setBounds(514, 38, 98, 22);
 		cbAdimplente_1.setModel(new DefaultComboBoxModel(new String[] { "Sim", "Não" }));
-		add(cbAdimplente_1);
+		getContentPane().add(cbAdimplente_1);
+		if (clienteSelecionado.getAdimplente()) {
+			cbAdimplente_1.setSelectedIndex(0);
+		} else {
+			cbAdimplente_1.setSelectedIndex(1);
+		}
 
 		JLabel lblEndereo = new JLabel("Endere\u00E7o:");
 		lblEndereo.setBounds(12, 231, 58, 16);
-		add(lblEndereo);
+		getContentPane().add(lblEndereo);
 
 		txtEndereco = new JTextField();
 		txtEndereco.setBounds(86, 228, 116, 22);
-		add(txtEndereco);
+		getContentPane().add(txtEndereco);
 		txtEndereco.setColumns(10);
+		txtEndereco.setText(clienteSelecionado.getEndereco());
 
 		final JRadioButton rbFeminino = new JRadioButton("Feminino");
 		rbFeminino.setBounds(86, 178, 127, 25);
-		add(rbFeminino);
+		getContentPane().add(rbFeminino);
+
+		if (clienteSelecionado.getSexo().equals("F")) {
+			rbFeminino.setSelected(true);
+		}
 
 		final JRadioButton rbMasculino = new JRadioButton("Masculino");
 		rbMasculino.setBounds(248, 178, 127, 25);
-		add(rbMasculino);
+		getContentPane().add(rbMasculino);
+
+		if (clienteSelecionado.getSexo().equals("M")) {
+			rbMasculino.setSelected(true);
+		}
+
+		final int idSelecionado = clienteSelecionado.getIdCliente();
 
 		JButton btnSalvar = new JButton("Atualizar");
 		btnSalvar.setBounds(514, 282, 98, 25);
@@ -138,10 +177,12 @@ public class AtualizarCliente extends JPanel {
 
 				String mensagem = controllerCliente.validarCamposSalvar(nomeDigitado, sobrenomeDigitado,
 						enderecoDigitado, sexoDigitado, cpfDigitado, telefoneDigitado, emailDigitado);
+
 				if (mensagem.isEmpty()) {
-					novoCliente = new Cliente(0, nomeDigitado, sobrenomeDigitado, enderecoDigitado, sexoDigitado,
-							cpfDigitado, telefoneDigitado, emailDigitado, null);
-					novoCliente = controllerCliente.salva(novoCliente);
+					Cliente atualizarCliente;
+					atualizarCliente = new Cliente(nomeDigitado, sobrenomeDigitado, enderecoDigitado, sexoDigitado,
+							cpfDigitado, telefoneDigitado, emailDigitado, null, idSelecionado);
+					controllerCliente.atualizarClienteController(atualizarCliente);
 
 				} else {
 					JOptionPane.showMessageDialog(null, mensagem, "Atenção", JOptionPane.WARNING_MESSAGE);
@@ -150,7 +191,7 @@ public class AtualizarCliente extends JPanel {
 			}
 
 		});
-		add(btnSalvar);
+		getContentPane().add(btnSalvar);
 	}
 
 }

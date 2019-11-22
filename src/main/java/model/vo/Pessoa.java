@@ -20,6 +20,10 @@ public class Pessoa {
 		return nome;
 	}
 
+	public String getNome() {
+		return nome;
+	}
+
 	public Pessoa(String nome, String sobrenome, String endereco, String sexo, String cpf, String telefone,
 			String email) {
 		super();
@@ -30,10 +34,6 @@ public class Pessoa {
 		this.cpf = cpf;
 		this.telefone = telefone;
 		this.email = email;
-	}
-
-	public String getNome() {
-		return nome;
 	}
 
 	public void setNome(String nome) {

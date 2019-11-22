@@ -90,8 +90,6 @@ public class CadastrarCliente extends JPanel {
 		lblAdimplente.setBounds(342, 38, 109, 16);
 		add(lblAdimplente);
 
-		adimplente[0] = "Sim";
-		adimplente[1] = "Não";
 		JComboBox cbAdimplente = new JComboBox();
 		cbAdimplente_1 = new JComboBox(adimplente);
 		cbAdimplente_1.setBounds(514, 38, 98, 22);
@@ -107,7 +105,7 @@ public class CadastrarCliente extends JPanel {
 		add(txtEndereco);
 		txtEndereco.setColumns(10);
 
-		final JRadioButton rbFemenino = new JRadioButton("Femenino");
+		final JRadioButton rbFemenino = new JRadioButton("Feminino");
 		rbFemenino.setBounds(86, 178, 127, 25);
 		add(rbFemenino);
 
@@ -141,8 +139,16 @@ public class CadastrarCliente extends JPanel {
 				String mensagem = controllerCliente.validarCamposSalvar(nomeDigitado, sobrenomeDigitado,
 						enderecoDigitado, sexoDigitado, cpfDigitado, telefoneDigitado, emailDigitado);
 				if (mensagem.isEmpty()) {
-					novoCliente = new Cliente(0, nomeDigitado, sobrenomeDigitado, enderecoDigitado, sexoDigitado,
-							cpfDigitado, telefoneDigitado, emailDigitado, null);
+					boolean adim;
+					if (cbAdimplente_1.getSelectedIndex() == 0) {
+						adim = true;
+					} else {
+						adim = false;
+					}
+
+					novoCliente = new Cliente(nomeDigitado, sobrenomeDigitado, enderecoDigitado, sexoDigitado,
+							cpfDigitado, telefoneDigitado, emailDigitado, adim, 0);
+
 					novoCliente = controllerCliente.salva(novoCliente);
 
 				} else {

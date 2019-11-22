@@ -34,7 +34,7 @@ public class ConsultarPet extends JPanel {
 		add(tblPet);
 
 		JButton btnExcluir = new JButton("Excluir");
-		btnExcluir.setBounds(492, 328, 97, 25);
+		btnExcluir.setBounds(334, 328, 97, 25);
 		add(btnExcluir);
 
 		final JTable tblPet;
@@ -70,12 +70,8 @@ public class ConsultarPet extends JPanel {
 		btnConsultar.setBounds(22, 328, 97, 25);
 		add(btnConsultar);
 
-		JButton btnAdicionar = new JButton("Adicionar");
-		btnAdicionar.setBounds(328, 328, 97, 25);
-		add(btnAdicionar);
-
 		JButton btnAtualizar = new JButton("Atualizar");
-		btnAtualizar.setBounds(162, 328, 97, 25);
+		btnAtualizar.setBounds(188, 328, 97, 25);
 		add(btnAtualizar);
 
 		JButton btnGerarXls = new JButton("Gerar XLS");
@@ -104,6 +100,10 @@ public class ConsultarPet extends JPanel {
 		});
 		btnGerarXls.setBounds(635, 328, 97, 25);
 		add(btnGerarXls);
+
+		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.setBounds(499, 328, 97, 25);
+		add(btnVoltar);
 
 	}
 }

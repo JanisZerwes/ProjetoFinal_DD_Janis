@@ -49,9 +49,9 @@ public class ControllerCliente {
 		clienteBO.cadastrarClienteBO(clienteVO);
 	}
 
-	public void excluirClienteController(Cliente clienteVO) {
+	public boolean excluirClienteController(Cliente clienteVO) {
 		ClienteBO clienteBO = new ClienteBO();
-		clienteBO.excluirClienteBO(clienteVO);
+		return clienteBO.excluirClienteBO(clienteVO);
 	}
 
 	public void atualizarClienteController(Cliente clienteVO) {

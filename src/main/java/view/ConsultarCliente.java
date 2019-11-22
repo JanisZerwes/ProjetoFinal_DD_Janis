@@ -9,6 +9,7 @@ import java.util.Locale;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
@@ -42,6 +43,8 @@ public class ConsultarCliente extends JPanel {
 		JButton btnConsultar = new JButton("Consultar");
 		btnConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+
+				limparTela();
 				ControllerCliente controllerClienteConsultar = new ControllerCliente();
 				ArrayList<Cliente> clienteTabela = controllerClienteConsultar.consultarTodosClientesController();
 
@@ -66,37 +69,67 @@ public class ConsultarCliente extends JPanel {
 			}
 		});
 
-		btnConsultar.setBounds(12, 340, 97, 25);
+		btnConsultar.setBounds(44, 340, 97, 25);
 		add(btnConsultar);
 
 		JButton btnAtualizar = new JButton("Atualizar");
 		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Object idSelecionado = tblClientes.getModel().getValueAt(tblClientes.getSelectedRow(), 0);
 
 				Cliente clienteSelecionado = new Cliente();
-				clienteSelecionado.setIdCliente(Integer.valueOf((String) idSelecionado));
 
-				AtualizarCliente atualizarCliente = new AtualizarCliente();
-				frame.setContentPane(atualizarCliente);
-				frame.revalidate();
+				try {
+					Object idSelecionado = tblClientes.getModel().getValueAt(tblClientes.getSelectedRow(), 0);
+					clienteSelecionado.setIdCliente(Integer.valueOf((String) idSelecionado));
+					AtualizarClienteFrame atualizarCliente = new AtualizarClienteFrame(clienteSelecionado);
+					atualizarCliente.setVisible(true);
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "Selecione uma linha");
+					System.out.println(e2.getMessage());
+				}
 
 			}
 		});
-		btnAtualizar.setBounds(141, 340, 97, 25);
+		btnAtualizar.setBounds(219, 340, 97, 25);
 		add(btnAtualizar);
 
-		JButton btnAdicionar = new JButton("Adicionar");
-		btnAdicionar.setBounds(302, 340, 97, 25);
-		add(btnAdicionar);
-
 		JButton btnExcluir = new JButton("Excluir");
-		btnExcluir.setBounds(468, 340, 97, 25);
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				Cliente clienteSelecionado = new Cliente();
+
+				try {
+					Object idSelecionado = tblClientes.getModel().getValueAt(tblClientes.getSelectedRow(), 0);
+					clienteSelecionado.setIdCliente(Integer.valueOf((String) idSelecionado));
+					ControllerCliente controladoraCliente = new ControllerCliente();
+					boolean excluiu = controladoraCliente.excluirClienteController(clienteSelecionado);
+
+					if (excluiu) {
+						JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso");
+					}
+
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "Selecione uma linha");
+					System.out.println(e2.getMessage());
+				}
+
+			}
+		});
+		btnExcluir.setBounds(417, 340, 97, 25);
 		add(btnExcluir);
 
 		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnVoltar.setBounds(603, 340, 97, 25);
 		add(btnVoltar);
 
+	}
+
+	private void limparTela() {
+		tblClientes.setModel(new DefaultTableModel(new Object[][] { colunas }, colunas));
 	}
 }

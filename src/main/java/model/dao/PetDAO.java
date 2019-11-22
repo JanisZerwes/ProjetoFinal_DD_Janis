@@ -121,4 +121,40 @@ public class PetDAO {
 		}
 		return relatorio;
 	}
+
+	public Pet consultarPetPorID(int id) {
+
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+
+		ResultSet resultado = null;
+		Pet petVO = new Pet();
+		String query = "SELECT idPet, nome, dtnascimento, peso, porte, especie, raca, sexo FROM pet WHERE IDCLIENTE = "
+				+ id;
+		try {
+			resultado = stmt.executeQuery(query);
+
+			if (resultado.next()) {
+
+				petVO.setIdPet(Integer.parseInt(resultado.getString(1)));
+				petVO.setNome(resultado.getString(2));
+				petVO.setDtNascimento(LocalDate.parse(resultado.getString(3), dataFormatter));
+				petVO.setPeso(resultado.getDouble(4));
+				petVO.setPorte(resultado.getString(5));
+				petVO.setEspecie(resultado.getString(6));
+				petVO.setRaca(resultado.getString(7));
+				petVO.setSexo(resultado.getString(8));
+
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Erro ao executar a Query de Atualização de Pets.");
+			System.out.println("Erro: " + e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return petVO;
+	}
 }

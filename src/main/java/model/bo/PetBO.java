@@ -42,8 +42,9 @@ public class PetBO {
 	}
 
 	public Pet consultarPetBO(Pet petVO) {
-		// TODO Auto-generated method stub
-		return null;
+		PetDAO petDAO = new PetDAO();
+		petVO = petDAO.consultarPetPorID(petVO.getIdPet());
+		return petVO;
 	}
 //
 //	public ArrayList<Pet> consultarTodosPetController() {
