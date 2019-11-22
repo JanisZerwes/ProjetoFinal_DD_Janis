@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -34,32 +33,18 @@ public class AtualizarVeterinarioFrame extends JFrame {
 	private JLabel lblCrmv;
 	private JTextField txtCrmv;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AtualizarVeterinarioFrame frame = new AtualizarVeterinarioFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public AtualizarVeterinarioFrame() {
+	public AtualizarVeterinarioFrame(Veterinario veterinarioSelecionado) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 711, 544);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+
+		ControllerVeterinario controladoraVeterinario = new ControllerVeterinario();
+
+		veterinarioSelecionado = controladoraVeterinario.consultarVeterinarioController(veterinarioSelecionado);
+		getContentPane().setLayout(null);
 
 		JLabel lblNome = new JLabel("Nome:");
 		lblNome.setBounds(12, 39, 56, 16);

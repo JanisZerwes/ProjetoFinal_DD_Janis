@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import model.vo.Cliente;
 import model.vo.Veterinario;
 
 public class VeterinarioDAO {
@@ -79,4 +80,44 @@ public class VeterinarioDAO {
 		return veterinariosVO;
 	}
 
+	public Veterinario consultarVeterinarioPorID(int idVeterinario) {
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+
+		ResultSet resultado = null;
+		Veterinario veterinarioVO = new Veterinario();
+		String query = "SELECT idveterinario, nome, sobrenome, endereco, sexo, cpf, telefone, email, certificado, crmv FROM veterinario WHERE IDVETERINARIO = "
+				+ idVeterinario;
+		try {
+			resultado = stmt.executeQuery(query);
+
+			if (resultado.next()) {
+
+				veterinarioVO.setIdVeterinario(Integer.parseInt(resultado.getString(1)));
+				veterinarioVO.setNome(resultado.getString(2));
+				veterinarioVO.setSobrenome(resultado.getString(3));
+				veterinarioVO.setEndereco(resultado.getString(4));
+				veterinarioVO.setSexo(resultado.getString(5));
+				veterinarioVO.setCpf(resultado.getString(6));
+				veterinarioVO.setTelefone(resultado.getString(7));
+				veterinarioVO.setEmail(resultado.getString(8));
+				veterinarioVO.setCertificado(resultado.getString(9));
+
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Erro ao executar a Query de Atualização de Veterinários.");
+			System.out.println("Erro: " + e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return veterinarioVO;
+	}
+
+	public Cliente consultarPorId(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

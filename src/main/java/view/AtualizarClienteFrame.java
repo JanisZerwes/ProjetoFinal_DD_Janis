@@ -32,14 +32,6 @@ public class AtualizarClienteFrame extends JFrame {
 	private Cliente novoCliente;
 	private JComboBox cbAdimplente_1;
 
-	/**
-	 * Create the frame.
-	 * 
-	 * @param clienteSelecionado
-	 * 
-	 * @param clienteSelecionado
-	 */
-
 	public AtualizarClienteFrame(Cliente clienteSelecionado) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 691, 414);

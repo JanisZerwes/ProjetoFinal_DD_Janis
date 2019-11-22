@@ -1,5 +1,7 @@
 package model.vo;
 
+import model.dao.VeterinarioDAO;
+
 public class Veterinario extends Pessoa {
 	private int idVeterinario;
 	private String certificado;
@@ -64,8 +66,9 @@ public class Veterinario extends Pessoa {
 	}
 
 	public Veterinario consultarVeterinarioBO(Veterinario veterinarioVO) {
-		// TODO Auto-generated method stub
-		return null;
+		VeterinarioDAO veterinarioDAO = new VeterinarioDAO();
+		veterinarioVO = veterinarioDAO.consultarVeterinarioPorID(veterinarioVO.getIdVeterinario());
+		return veterinarioVO;
 	}
 
 }
