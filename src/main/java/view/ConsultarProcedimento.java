@@ -64,17 +64,22 @@ public class ConsultarProcedimento extends JPanel {
 		btnAtualizar.setBounds(210, 393, 97, 25);
 		add(btnAtualizar);
 
-		JButton btnAdicionar = new JButton("Adicionar");
-		btnAdicionar.setBounds(433, 393, 97, 25);
-		add(btnAdicionar);
-
 		JButton btnExcluir = new JButton("Excluir");
-		btnExcluir.setBounds(659, 393, 97, 25);
+		btnExcluir.setBounds(391, 393, 97, 25);
 		add(btnExcluir);
 
 		JButton btnVoltar = new JButton("Voltar");
-		btnVoltar.setBounds(782, 393, 97, 25);
+		btnVoltar.setBounds(566, 393, 97, 25);
 		add(btnVoltar);
+
+		JButton btnGerarRelatorio = new JButton("Gerar Relat\u00F3rio");
+		btnGerarRelatorio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		btnGerarRelatorio.setBounds(740, 393, 131, 25);
+		add(btnGerarRelatorio);
 
 	}
 
