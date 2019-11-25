@@ -69,7 +69,7 @@ public class ConsultarCliente extends JPanel {
 			}
 		});
 
-		btnConsultar.setBounds(44, 340, 97, 25);
+		btnConsultar.setBounds(32, 340, 97, 25);
 		add(btnConsultar);
 
 		JButton btnAtualizar = new JButton("Atualizar");
@@ -90,7 +90,7 @@ public class ConsultarCliente extends JPanel {
 
 			}
 		});
-		btnAtualizar.setBounds(219, 340, 97, 25);
+		btnAtualizar.setBounds(162, 340, 97, 25);
 		add(btnAtualizar);
 
 		JButton btnExcluir = new JButton("Excluir");
@@ -116,7 +116,7 @@ public class ConsultarCliente extends JPanel {
 
 			}
 		});
-		btnExcluir.setBounds(417, 340, 97, 25);
+		btnExcluir.setBounds(315, 340, 97, 25);
 		add(btnExcluir);
 
 		JButton btnVoltar = new JButton("Voltar");
@@ -124,8 +124,17 @@ public class ConsultarCliente extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnVoltar.setBounds(603, 340, 97, 25);
+		btnVoltar.setBounds(480, 340, 97, 25);
 		add(btnVoltar);
+
+		JButton btnGerarRelatorio = new JButton("Gerar Relatório");
+		btnGerarRelatorio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+			}
+		});
+		btnGerarRelatorio.setBounds(610, 340, 119, 25);
+		add(btnGerarRelatorio);
 
 	}
 
