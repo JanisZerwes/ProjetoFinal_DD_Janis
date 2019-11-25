@@ -19,7 +19,8 @@ public class PetDAO {
 
 	public Pet salvar(Pet novoPet) {
 		Connection conexao = Banco.getConnection();
-		String sql = " INSERT INTO PET(NOME, PESO, PORTE, RACA, SEXO, DTNASCIMENTO) " + " VALUES (?,?,?,?,?,?)";
+		String sql = " INSERT INTO PET(NOME, PESO, PORTE, RACA, SEXO, ESPECIE, DTNASCIMENTO) "
+				+ " VALUES (?,?,?,?,?,?,?)";
 		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql, PreparedStatement.RETURN_GENERATED_KEYS);
 		try {
 			stmt.setString(1, novoPet.getNome());
@@ -27,7 +28,10 @@ public class PetDAO {
 			stmt.setString(3, novoPet.getPorte());
 			stmt.setString(4, novoPet.getRaca());
 			stmt.setString(5, novoPet.getSexo());
-			stmt.setDate(6, Date.valueOf(novoPet.getDtNascimento()));
+			stmt.setString(6, novoPet.getEspecie());
+			// stmt.setString(7, novoPet.getDtNascimento(LocalDate.parse, dataFormatter));
+
+			stmt.setDate(7, Date.valueOf(novoPet.getDtNascimento()));
 
 			stmt.execute();
 
@@ -156,5 +160,23 @@ public class PetDAO {
 			Banco.closeConnection(conn);
 		}
 		return petVO;
+	}
+
+	public boolean excluir(int idPet) {
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		int resultado = 0;
+
+		String query = "DELETE FROM PET WHERE idpet = " + idPet;
+		try {
+			resultado = stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			System.out.println("Erro ao executar a Query de Exclusão do Pet.");
+			System.out.println("Erro: " + e.getMessage());
+		} finally {
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return (resultado > 0);
 	}
 }

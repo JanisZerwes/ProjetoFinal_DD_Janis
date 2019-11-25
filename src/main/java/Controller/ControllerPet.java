@@ -22,9 +22,9 @@ public class ControllerPet {
 		petBO.cadastrarPetBO(petBO);
 	}
 
-	public void excluirPetController(Pet petVO) {
+	public boolean excluirPetController(Pet petVO) {
 		PetBO petBO = new PetBO();
-		petBO.excluirPetBO(petVO);
+		return petBO.excluirPetBO(petVO);
 	}
 
 	public void atualizarPetController(Pet petVO) {
@@ -65,7 +65,7 @@ public class ControllerPet {
 		if (racaDigitada.isEmpty() || racaDigitada.trim().length() < 1) {
 			mensagem += "Digite a Raça \n";
 		}
-		if (sexo.isEmpty()) {
+		if (sexo.isEmpty() || sexo.trim().length() < 1) {
 			mensagem += "Escolha o sexo \n";
 		}
 

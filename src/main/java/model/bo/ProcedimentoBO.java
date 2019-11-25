@@ -7,6 +7,13 @@ import model.vo.Procedimento;
 
 public class ProcedimentoBO {
 
+	private static ProcedimentoDAO dao = new ProcedimentoDAO();
+
+	public static Procedimento salvar(Procedimento novoProcedimento) {
+		return dao.salvar(novoProcedimento);
+
+	}
+
 	public void cadastrarProcedimentoBO(Procedimento procedimentoVO) {
 		// TODO Auto-generated method stub
 

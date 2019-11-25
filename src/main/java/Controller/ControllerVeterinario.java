@@ -22,7 +22,7 @@ public class ControllerVeterinario {
 			mensagem += "Digite o Endereço Completo";
 		}
 		if (sexoDigitado.isEmpty() || sexoDigitado.trim().length() < 1) {
-			mensagem += "Sexo deve possuir pelo menos 1 letra \n";
+			mensagem += "Escolha o Sexo \n";
 		}
 		if (cpfDigitado.isEmpty() || cpfDigitado.trim().length() != 11) {
 			mensagem += "CPF deve possuir 11 exatamente dÃ­gitos \n";

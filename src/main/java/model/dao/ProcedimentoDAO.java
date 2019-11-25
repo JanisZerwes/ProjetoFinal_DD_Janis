@@ -1,6 +1,8 @@
 package model.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,6 +15,36 @@ import model.vo.Procedimento;
 
 public class ProcedimentoDAO {
 	DateTimeFormatter dataFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+	public Procedimento salvar(Procedimento novoProcedimento) {
+		Connection conexao = Banco.getConnection();
+		String sql = " INSERT INTO PROCEDIMENTO( titulo, valor, dtentrada, dtsaida, formapagamento, situacaopagamento) "
+				+ " VALUES (?,?,?,?,?,?)";
+		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql, PreparedStatement.RETURN_GENERATED_KEYS);
+		try {
+			stmt.setString(1, novoProcedimento.getTitulo());
+			stmt.setDouble(2, novoProcedimento.getValor());
+			stmt.setDate(3, Date.valueOf(novoProcedimento.getDtEntrada()));
+			stmt.setDate(4, Date.valueOf(novoProcedimento.getDtSaida()));
+			stmt.setString(5, novoProcedimento.getFormaPagamento());
+			stmt.setBoolean(6, novoProcedimento.getSituacaoPagamento());
+			System.out.println(novoProcedimento.getTitulo() + "Saiu da DAO");
+			stmt.execute();
+
+			ResultSet rs = stmt.getGeneratedKeys();
+
+			if (rs.next()) {
+				int idProcedimentoGerado = rs.getInt(1);
+
+				novoProcedimento.setIdProcedimento(idProcedimentoGerado);
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao inserir novo Procedimento.");
+			System.out.println("Erro: " + e.getMessage());
+		}
+
+		return novoProcedimento;
+	}
 
 	public ArrayList<Procedimento> consultarTodosProcedimentos() {
 		Connection conn = Banco.getConnection();

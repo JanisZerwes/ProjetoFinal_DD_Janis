@@ -20,7 +20,6 @@ public class ClienteDAO implements Base<Cliente> {
 			stmt.setString(1, novoCliente.getNome());
 			stmt.setString(2, novoCliente.getSobrenome());
 			stmt.setString(3, novoCliente.getEndereco());
-
 			stmt.setString(4, novoCliente.getSexo());
 			stmt.setString(5, novoCliente.getCpf());
 			stmt.setString(6, novoCliente.getTelefone());

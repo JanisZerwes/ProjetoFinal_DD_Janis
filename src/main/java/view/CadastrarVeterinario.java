@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
@@ -19,7 +20,6 @@ public class CadastrarVeterinario extends JPanel {
 	private JTextField txtNome;
 	private JTextField txtSobrenome;
 	private JTextField txtEndereco;
-	private JTextField txtSexo;
 	private JTextField txtCpf;
 	private JLabel lblTelefone;
 	private JTextField txtTelefone;
@@ -68,11 +68,6 @@ public class CadastrarVeterinario extends JPanel {
 		lblSexo.setBounds(12, 182, 56, 16);
 		add(lblSexo);
 
-		txtSexo = new JTextField();
-		txtSexo.setBounds(107, 179, 116, 22);
-		add(txtSexo);
-		txtSexo.setColumns(10);
-
 		JLabel lblNewLabel = new JLabel("Cpf:");
 		lblNewLabel.setBounds(12, 229, 56, 16);
 		add(lblNewLabel);
@@ -118,6 +113,14 @@ public class CadastrarVeterinario extends JPanel {
 		add(txtCrmv);
 		txtCrmv.setColumns(10);
 
+		final JRadioButton rbtnFeminino = new JRadioButton("Feminino");
+		rbtnFeminino.setBounds(107, 178, 127, 25);
+		add(rbtnFeminino);
+
+		final JRadioButton rbtnMasculino = new JRadioButton("Masculino");
+		rbtnMasculino.setBounds(243, 178, 127, 25);
+		add(rbtnMasculino);
+
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -126,19 +129,26 @@ public class CadastrarVeterinario extends JPanel {
 				String nomeDigitado = txtNome.getText();
 				String sobrenomeDigitado = txtSobrenome.getText();
 				String enderecoDigitado = txtEndereco.getText();
-				String sexoDigitado = txtSexo.getText();
+				String sexoDigitado = "";
 				String cpfDigitado = txtCpf.getText().replace("-", "").replace(".", "");
 				String telefoneDigitado = txtTelefone.getText();
 				String emailDigitado = txtEmail.getText();
 				String certificadoDigitado = txtCertificado.getText();
 				String crmvDigitado = txtCrmv.getText();
+				if (rbtnMasculino.isSelected()) {
+					sexoDigitado = "M";
+				}
 
-				novoVeterinario = new Veterinario(0, nomeDigitado, sobrenomeDigitado, enderecoDigitado, sexoDigitado,
-						cpfDigitado, telefoneDigitado, emailDigitado, certificadoDigitado, crmvDigitado);
+				if (rbtnFeminino.isSelected()) {
+					sexoDigitado = "F";
+				}
 
 				String mensagem = controllerVeterinario.validarCamposSalvar(nomeDigitado, sobrenomeDigitado,
 						enderecoDigitado, sexoDigitado, cpfDigitado, telefoneDigitado, emailDigitado,
 						certificadoDigitado, crmvDigitado);
+
+				novoVeterinario = new Veterinario(0, nomeDigitado, sobrenomeDigitado, enderecoDigitado, sexoDigitado,
+						cpfDigitado, telefoneDigitado, emailDigitado, certificadoDigitado, crmvDigitado);
 
 				if (mensagem.isEmpty()) {
 

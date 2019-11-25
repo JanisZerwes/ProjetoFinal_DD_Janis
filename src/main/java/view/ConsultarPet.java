@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
@@ -34,6 +35,27 @@ public class ConsultarPet extends JPanel {
 		add(tblPet);
 
 		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				Pet petSelecionado = new Pet();
+
+				try {
+					Object idSelecionado = tblPet.getModel().getValueAt(tblPet.getSelectedRow(), 0);
+					petSelecionado.setIdPet(Integer.valueOf((String) idSelecionado));
+					ControllerPet controllerPet = new ControllerPet();
+					boolean excluiu = controllerPet.excluirPetController(petSelecionado);
+
+					if (excluiu) {
+						JOptionPane.showMessageDialog(null, "Pet excluído com sucesso");
+					}
+
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "Selecione uma linha");
+					System.out.println(e2.getMessage());
+				}
+			}
+		});
 		btnExcluir.setBounds(334, 328, 97, 25);
 		add(btnExcluir);
 

@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -48,86 +49,89 @@ public class AtualizarVeterinarioFrame extends JFrame {
 
 		JLabel lblNome = new JLabel("Nome:");
 		lblNome.setBounds(12, 39, 56, 16);
-		getContentPane().add(lblNome);
+		add(lblNome);
 
 		txtNome = new JTextField();
 		txtNome.setBounds(107, 36, 116, 22);
-		getContentPane().add(txtNome);
+		add(txtNome);
 		txtNome.setColumns(10);
 
 		JLabel lblSobrenome = new JLabel("Sobrenome:");
 		lblSobrenome.setBounds(12, 83, 83, 16);
-		getContentPane().add(lblSobrenome);
+		add(lblSobrenome);
 
 		txtSobrenome = new JTextField();
 		txtSobrenome.setBounds(107, 80, 116, 22);
-		getContentPane().add(txtSobrenome);
+		add(txtSobrenome);
 		txtSobrenome.setColumns(10);
 
 		txtEndereco = new JTextField();
 		txtEndereco.setBounds(107, 132, 116, 22);
-		getContentPane().add(txtEndereco);
+		add(txtEndereco);
 		txtEndereco.setColumns(10);
 
 		JLabel lblEndereo = new JLabel("Endere\u00E7o:");
 		lblEndereo.setBounds(12, 135, 83, 16);
-		getContentPane().add(lblEndereo);
+		add(lblEndereo);
 
 		JLabel lblSexo = new JLabel("Sexo:");
 		lblSexo.setBounds(12, 182, 56, 16);
-		getContentPane().add(lblSexo);
-
-		txtSexo = new JTextField();
-		txtSexo.setBounds(107, 179, 116, 22);
-		getContentPane().add(txtSexo);
-		txtSexo.setColumns(10);
+		add(lblSexo);
 
 		JLabel lblNewLabel = new JLabel("Cpf:");
 		lblNewLabel.setBounds(12, 229, 56, 16);
-		getContentPane().add(lblNewLabel);
+		add(lblNewLabel);
 
 		txtCpf = new JTextField();
 		txtCpf.setBounds(107, 226, 116, 22);
-		getContentPane().add(txtCpf);
+		add(txtCpf);
 		txtCpf.setColumns(10);
 
 		lblTelefone = new JLabel("Telefone:");
 		lblTelefone.setBounds(12, 276, 56, 16);
-		getContentPane().add(lblTelefone);
+		add(lblTelefone);
 
 		txtTelefone = new JTextField();
 		txtTelefone.setBounds(107, 273, 116, 22);
-		getContentPane().add(txtTelefone);
+		add(txtTelefone);
 		txtTelefone.setColumns(10);
 
 		lblEmail = new JLabel("Email:");
 		lblEmail.setBounds(12, 325, 56, 16);
-		getContentPane().add(lblEmail);
+		add(lblEmail);
 
 		txtEmail = new JTextField();
 		txtEmail.setBounds(107, 322, 116, 22);
-		getContentPane().add(txtEmail);
+		add(txtEmail);
 		txtEmail.setColumns(10);
 
 		lblCertificado = new JLabel("Certificados:");
 		lblCertificado.setBounds(12, 379, 83, 16);
-		getContentPane().add(lblCertificado);
+		add(lblCertificado);
 
 		txtCertificado = new JTextField();
 		txtCertificado.setBounds(107, 376, 116, 22);
-		getContentPane().add(txtCertificado);
+		add(txtCertificado);
 		txtCertificado.setColumns(10);
 
 		lblCrmv = new JLabel("Crmv:");
 		lblCrmv.setBounds(12, 425, 56, 16);
-		getContentPane().add(lblCrmv);
+		add(lblCrmv);
 
 		txtCrmv = new JTextField();
 		txtCrmv.setBounds(107, 422, 116, 22);
-		getContentPane().add(txtCrmv);
+		add(txtCrmv);
 		txtCrmv.setColumns(10);
 
-		JButton btnSalvar = new JButton("Atualizar");
+		final JRadioButton rbtnFeminino = new JRadioButton("Feminino");
+		rbtnFeminino.setBounds(107, 178, 127, 25);
+		add(rbtnFeminino);
+
+		final JRadioButton rbtnMasculino = new JRadioButton("Masculino");
+		rbtnMasculino.setBounds(243, 178, 127, 25);
+		add(rbtnMasculino);
+
+		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ControllerVeterinario controllerVeterinario = new ControllerVeterinario();
@@ -135,7 +139,7 @@ public class AtualizarVeterinarioFrame extends JFrame {
 				String nomeDigitado = txtNome.getText();
 				String sobrenomeDigitado = txtSobrenome.getText();
 				String enderecoDigitado = txtEndereco.getText();
-				String sexoDigitado = txtSexo.getText();
+				String sexoDigitado = "";
 				String cpfDigitado = txtCpf.getText().replace("-", "").replace(".", "");
 				String telefoneDigitado = txtTelefone.getText();
 				String emailDigitado = txtEmail.getText();
@@ -171,7 +175,7 @@ public class AtualizarVeterinarioFrame extends JFrame {
 		});
 
 		btnSalvar.setBounds(357, 421, 97, 25);
-		getContentPane().add(btnSalvar);
+		add(btnSalvar);
 
 	}
 

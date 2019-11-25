@@ -18,8 +18,9 @@ public class PetBO {
 
 	}
 
-	public void excluirPetBO(Pet petVO) {
-		// TODO Auto-generated method stub
+	public boolean excluirPetBO(Pet petVO) {
+		PetDAO petDAO = new PetDAO();
+		return petDAO.excluir(petVO.getIdPet());
 
 	}
 

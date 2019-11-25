@@ -101,7 +101,9 @@ public class CadastrarProcedimento extends JPanel {
 
 				String mensagem = controllerProcedimento.validarCamposSalvar(tituloDigitado, dataEntradaDigitada,
 						dataSaidaDigitada, valorDigitada, formaPagamentoDigitada, situacaoPagamentoDigitada);
-
+				novoProcedimento = new Procedimento(0, tituloDigitado, dataEntradaDigitada, dataSaidaDigitada,
+						valorDigitada, formaPagamentoDigitada, situacaoPagamentoDigitada);
+				System.out.println(tituloDigitado + "Saiu do Cadastrar");
 				if (mensagem.isEmpty()) {
 					novoProcedimento = new Procedimento(0, tituloDigitado, dataEntradaDigitada, dataSaidaDigitada,
 							valorDigitada, formaPagamentoDigitada, situacaoPagamentoDigitada);

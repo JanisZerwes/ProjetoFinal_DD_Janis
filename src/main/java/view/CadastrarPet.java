@@ -119,12 +119,11 @@ public class CadastrarPet extends JPanel {
 				if (rbFemea.isSelected()) {
 					sexo = "F";
 				}
+				String mensagem = controllerPet.validarCamposSalvar(nomePetDigitado, pesoPetDigitado, porteDigitado,
+						racaDigitada, sexo, dataNascimentoDigitada);
 
 				novoPet = new Pet(0, nomePetDigitado, pesoPetDigitado, porteDigitado, racaDigitada, sexo,
 						dataNascimentoDigitada);
-
-				String mensagem = controllerPet.validarCamposSalvar(nomePetDigitado, pesoPetDigitado, porteDigitado,
-						racaDigitada, sexo, dataNascimentoDigitada);
 
 				if (mensagem.isEmpty()) {
 					novoPet = new Pet(0, nomePetDigitado, pesoPetDigitado, porteDigitado, racaDigitada, sexo,
@@ -133,6 +132,7 @@ public class CadastrarPet extends JPanel {
 				} else {
 					JOptionPane.showMessageDialog(null, mensagem, "Atenção", JOptionPane.WARNING_MESSAGE);
 				}
+
 			}
 
 		});
