@@ -120,4 +120,31 @@ public class VeterinarioDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public boolean alterar(Veterinario entidade) {
+		Connection conexao = Banco.getConnection();
+		int resultado = 0;
+		String sql = " INSERT INTO VETERINARIO(NOME, SOBRENOME, ENDERECO,SEXO, CPF, TELEFONE, EMAIL, CERTIFICADO, CRMV) "
+				+ " VALUES (?,?,?,?,?,?,?,?,?)";
+		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql, PreparedStatement.RETURN_GENERATED_KEYS);
+		try {
+
+			stmt.setString(1, entidade.getNome());
+			stmt.setString(2, entidade.getSobrenome());
+			stmt.setString(3, entidade.getEndereco());
+			stmt.setString(4, entidade.getSexo());
+			stmt.setString(5, entidade.getCpf());
+			stmt.setString(6, entidade.getTelefone());
+			stmt.setString(7, entidade.getEmail());
+			stmt.setString(8, entidade.getCertificado());
+			stmt.setString(9, entidade.getCrmv());
+			stmt.execute();
+
+		} catch (SQLException e) {
+			System.out.println("Erro ao executar a Query de Atualização de Veterin�rio");
+			System.out.println("Erro: " + e.getMessage());
+		}
+		return (resultado > 0);
+
+	}
 }

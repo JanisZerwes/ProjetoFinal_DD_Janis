@@ -38,6 +38,7 @@ public class ConsultarProcedimento extends JPanel {
 		JButton btnNewButton = new JButton("Consultar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				limparTela();
 				ControllerProcedimento consultarTodosProcedimentosController = new ControllerProcedimento();
 				ArrayList<Procedimento> procedimentoTabela = consultarTodosProcedimentosController
 						.consultarTodosProcedimentosController();
@@ -81,6 +82,10 @@ public class ConsultarProcedimento extends JPanel {
 		btnGerarRelatorio.setBounds(740, 393, 131, 25);
 		add(btnGerarRelatorio);
 
+	}
+
+	void limparTela() {
+		tblProcedimento.setModel(new DefaultTableModel(new Object[][] { colunas }, colunas));
 	}
 
 }

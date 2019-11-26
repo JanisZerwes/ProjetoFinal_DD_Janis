@@ -24,7 +24,7 @@ public class RelatorioCliente extends Pessoa {
 
 	public RelatorioCliente() {
 		super();
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public RelatorioCliente(int idCliente, Boolean adimplente, String nome, String sobrenome, String endereco,

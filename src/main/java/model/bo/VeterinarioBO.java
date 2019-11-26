@@ -25,7 +25,8 @@ public class VeterinarioBO {
 	}
 
 	public void atualizarVeterinarioBO(Veterinario veterinarioVO) {
-		// TODO Auto-generated method stub
+		VeterinarioDAO veterinarioDAO = new VeterinarioDAO();
+		veterinarioDAO.alterar(veterinarioVO);
 
 	}
 

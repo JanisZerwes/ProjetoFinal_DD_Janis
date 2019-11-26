@@ -33,6 +33,12 @@ public class Veterinario extends Pessoa {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Veterinario(String nomeDigitado, String sobrenomeDigitado, String enderecoDigitado, String sexoDigitado,
+			String cpfDigitado, String telefoneDigitado, String emailDigitado, String certificadoDigitado,
+			String crmvDigitado) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getIdVeterinario() {
 		return idVeterinario;
 	}

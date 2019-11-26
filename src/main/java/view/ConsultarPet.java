@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -20,17 +19,20 @@ import model.dto.RelatorioPet;
 import model.vo.Pet;
 
 public class ConsultarPet extends JPanel {
-	private JTable tblPet;
+	// private JTable tblPet;
 
 	/**
 	 * Create the panel.
 	 */
+	final JTable tblPet;
+	String[] colunas = { "#", "Nome", "Porte", "Peso", "Raça", "Data Nascimento", "Especie" };
+
 	public ConsultarPet() {
 		setBorder(new LineBorder(Color.GREEN, 4));
 		setLayout(null);
 
 		tblPet = new JTable();
-		tblPet.setForeground(Color.GREEN);
+		tblPet.setForeground(Color.BLACK);
 		tblPet.setBounds(12, 60, 720, 220);
 		add(tblPet);
 
@@ -59,18 +61,11 @@ public class ConsultarPet extends JPanel {
 		btnExcluir.setBounds(334, 328, 97, 25);
 		add(btnExcluir);
 
-		final JTable tblPet;
-		String[] colunas = { "#", "Nome", "Porte", "Peso", "Raça", "Data Nascimento", "Especie" };
-
-		tblPet = new JTable();
-		tblPet.setModel(new DefaultTableModel(new Object[][] { colunas }, colunas));
-		tblPet.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-		tblPet.setBounds(12, 30, 720, 281);
-		add(tblPet);
-
 		JButton btnConsultar = new JButton("Consultar");
 		btnConsultar.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
+				limparTela();
 				ControllerPet controllerPetConsultar = new ControllerPet();
 				ArrayList<Pet> petTabela = controllerPetConsultar.consultarTodosPetController();
 
@@ -126,6 +121,11 @@ public class ConsultarPet extends JPanel {
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.setBounds(499, 328, 97, 25);
 		add(btnVoltar);
+
+	}
+
+	private void limparTela() {
+		tblPet.setModel(new DefaultTableModel(new Object[][] { colunas }, colunas));
 
 	}
 }
