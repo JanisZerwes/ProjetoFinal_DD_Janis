@@ -12,20 +12,18 @@ public class Pet {
 	private String porte;
 	private String especie;
 	private String raca;
-	private String observacao;
+
 	private String sexo;
 
 	DateTimeFormatter dataFormatter = DateTimeFormatter.ofPattern(" yyyy-MM-dd ");
 
-	public Pet(int idPet, String nomePetDigitado, String pesoPetDigitado, String porteDigitado, String racaDigitada,
-			String dataNascimentoDigitada, String sexo) {
-		super();
-
+	@Override
+	public String toString() {
+		return idPet + ". " + nome;
 	}
 
 	public Pet(int idPet, Cliente cliente, String nome, LocalDate dtNascimento, double peso, String porte,
 			String especie, String raca, String sexo) {
-
 		super();
 		this.idPet = idPet;
 		this.cliente = cliente;
@@ -35,12 +33,13 @@ public class Pet {
 		this.porte = porte;
 		this.especie = especie;
 		this.raca = raca;
-		this.sexo = sexo;
 
+		this.sexo = sexo;
 	}
 
 	public Pet() {
-		// TODO Auto-generated constructor stub
+		super();
+
 	}
 
 	public int getIdPet() {
@@ -105,14 +104,6 @@ public class Pet {
 
 	public void setRaca(String raca) {
 		this.raca = raca;
-	}
-
-	public String getObservacao() {
-		return observacao;
-	}
-
-	public void setObservacao(String observacao) {
-		this.observacao = observacao;
 	}
 
 	public String getSexo() {

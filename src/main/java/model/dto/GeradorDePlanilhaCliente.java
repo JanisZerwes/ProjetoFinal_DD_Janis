@@ -13,10 +13,10 @@ import org.apache.poi.ss.usermodel.Row;
 import model.vo.Cliente;
 
 public class GeradorDePlanilhaCliente {
-	byte[] Cliente;
 
-	public void gerarPlanilhaClienteCompleta(List<RelatorioCliente> clientes, String caminho) {
-		String[] colunasPlanilha = { "idCliente", "nome", "sobrenome", "endereco", "sexo", "cpf", "telefone", "email" };
+	public void gerarPlanilhaClienteCompletaClientes(List<RelatorioCliente> clientes, String caminho) {
+		String[] colunasPlanilha = { "idCliente", "nome", "sobrenome", "endereco", "sexo", "cpf", "telefone", "email",
+				"qtd pets" };
 
 		HSSFWorkbook planilha = new HSSFWorkbook();
 		HSSFSheet abaPlanilha = planilha.createSheet("Clientes");
@@ -41,6 +41,7 @@ public class GeradorDePlanilhaCliente {
 			novaLinha.createCell(5).setCellValue(cliente.getCpf());
 			novaLinha.createCell(6).setCellValue(cliente.getTelefone());
 			novaLinha.createCell(7).setCellValue(cliente.getEmail());
+			novaLinha.createCell(8).setCellValue(cliente.getQuantidadePets());
 
 		}
 

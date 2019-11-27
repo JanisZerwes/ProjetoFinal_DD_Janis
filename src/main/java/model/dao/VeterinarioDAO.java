@@ -124,9 +124,9 @@ public class VeterinarioDAO {
 	public boolean alterar(Veterinario entidade) {
 		Connection conexao = Banco.getConnection();
 		int resultado = 0;
-		String sql = " INSERT INTO VETERINARIO(NOME, SOBRENOME, ENDERECO,SEXO, CPF, TELEFONE, EMAIL, CERTIFICADO, CRMV) "
-				+ " VALUES (?,?,?,?,?,?,?,?,?)";
-		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql, PreparedStatement.RETURN_GENERATED_KEYS);
+		String sql = " UPDATE VETERINARIO SET NOME =?, SOBRENOME =?, ENDERECO =?,SEXO =?, CPF =?, TELEFONE =?, EMAIL =?, CERTIFICADO =?, CRMV ? ";
+
+		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql, PreparedStatement.NO_GENERATED_KEYS);
 		try {
 
 			stmt.setString(1, entidade.getNome());

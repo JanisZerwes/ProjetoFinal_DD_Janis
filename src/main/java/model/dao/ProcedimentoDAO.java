@@ -1,7 +1,6 @@
 package model.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,23 +10,40 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import model.vo.Cliente;
+import model.vo.Pet;
 import model.vo.Procedimento;
+import model.vo.Tipo;
+import model.vo.Veterinario;
 
 public class ProcedimentoDAO {
 	DateTimeFormatter dataFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	public Procedimento salvar(Procedimento novoProcedimento) {
 		Connection conexao = Banco.getConnection();
-		String sql = " INSERT INTO PROCEDIMENTO( titulo, valor, dtentrada, dtsaida, formapagamento, situacaopagamento) "
-				+ " VALUES (?,?,?,?,?,?)";
+		String sql = " INSERT INTO PROCEDIMENTO(idpet, idveterinario, titulo, dtentrada, dtSaida, valor,"
+				+ "  formapagamento, situacaopagamento, idtipo) " + " VALUES (?,?,?,?,?,?,?,?,?)";
+
+//		int idProcedimento, Pet pet, Veterinario veterinario, String titulo, LocalDate dtEntrada,
+//		LocalDate dtSaida , double valor, String formaPagamento, boolean situacaoPagamento, Tipo tipo
+
 		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql, PreparedStatement.RETURN_GENERATED_KEYS);
 		try {
-			stmt.setString(1, novoProcedimento.getTitulo());
-			stmt.setDouble(2, novoProcedimento.getValor());
-			stmt.setDate(3, Date.valueOf(novoProcedimento.getDtEntrada()));
-			stmt.setDate(4, Date.valueOf(novoProcedimento.getDtSaida()));
-			stmt.setString(5, novoProcedimento.getFormaPagamento());
-			stmt.setBoolean(6, novoProcedimento.getSituacaoPagamento());
+
+			System.out.println("teste procedimento dao " + novoProcedimento.getDtEntrada());
+			stmt.setInt(1, novoProcedimento.getPet().getIdPet());
+			stmt.setInt(2, novoProcedimento.getVeterinario().getIdVeterinario());
+			stmt.setString(3, novoProcedimento.getTitulo());
+			stmt.setString(4, (novoProcedimento.getDtEntrada().toString()));
+			stmt.setString(5, (novoProcedimento.getDtSaida().toString()));
+			stmt.setDouble(6, novoProcedimento.getValor());
+			stmt.setString(7, novoProcedimento.getFormaPagamento());
+			if (novoProcedimento.getSituacaoPagamento() == true) {
+				stmt.setString(8, "Pago");
+			} else {
+				stmt.setString(8, "Não pago");
+			}
+
+			stmt.setInt(9, novoProcedimento.getTipo().getIdTipo());
 			System.out.println(novoProcedimento.getTitulo() + "Saiu da DAO");
 			stmt.execute();
 
@@ -52,7 +68,8 @@ public class ProcedimentoDAO {
 		ResultSet resultado = null;
 		ArrayList<Procedimento> procedimentosVO = new ArrayList<Procedimento>();
 
-		String query = "SELECT idProcedimento, titulo, dtEntrada, dtSaida, valor, formaPagamento, situacaoPagamento FROM Procedimento";
+		String query = "SELECT idProcedimento, titulo, dtEntrada, dtSaida, valor, formaPagamento, situacaoPagamento, idtipo, idpet, idveterinario FROM Procedimento";
+
 		try {
 
 			resultado = stmt.executeQuery(query);
@@ -65,7 +82,21 @@ public class ProcedimentoDAO {
 				procedimentoVO.setDtSaida(LocalDate.parse(resultado.getString(4), dataFormatter));
 				procedimentoVO.setValor(resultado.getDouble(5));
 				procedimentoVO.setFormaPagamento(resultado.getString(6));
-				procedimentoVO.setSituacaoPagamento(resultado.getBoolean(7));
+				if (resultado.getString(7).equals("Pago")) {
+					procedimentoVO.setSituacaoPagamento(true);
+				} else {
+					procedimentoVO.setSituacaoPagamento(false);
+				}
+				Tipo tipo = new Tipo(resultado.getInt(8), "");
+				procedimentoVO.setTipo(tipo);
+
+				Pet pet = new Pet();
+				pet.setIdPet(resultado.getInt(9));
+				procedimentoVO.setPet(pet);
+
+				Veterinario veterinario = new Veterinario();
+				veterinario.setIdVeterinario(resultado.getInt(10));
+				procedimentoVO.setVeterinario(veterinario);
 
 				procedimentosVO.add(procedimentoVO);
 

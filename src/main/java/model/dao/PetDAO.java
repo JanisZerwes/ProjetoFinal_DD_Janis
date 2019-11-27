@@ -1,7 +1,6 @@
 package model.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,8 +18,8 @@ public class PetDAO {
 
 	public Pet salvar(Pet novoPet) {
 		Connection conexao = Banco.getConnection();
-		String sql = " INSERT INTO PET(NOME, PESO, PORTE, RACA, SEXO, ESPECIE, DTNASCIMENTO) "
-				+ " VALUES (?,?,?,?,?,?,?)";
+		String sql = " INSERT INTO PET(NOME, PESO, PORTE, RACA, SEXO, ESPECIE, DTNASCIMENTO, IDCLIENTE) "
+				+ " VALUES (?,?,?,?,?,?,?,?)";
 		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql, PreparedStatement.RETURN_GENERATED_KEYS);
 		try {
 			stmt.setString(1, novoPet.getNome());
@@ -29,9 +28,9 @@ public class PetDAO {
 			stmt.setString(4, novoPet.getRaca());
 			stmt.setString(5, novoPet.getSexo());
 			stmt.setString(6, novoPet.getEspecie());
-			// stmt.setString(7, novoPet.getDtNascimento(LocalDate.parse, dataFormatter));
-
-			stmt.setDate(7, Date.valueOf(novoPet.getDtNascimento()));
+			System.out.println(novoPet.getDtNascimento() + "impressao PetDao");
+			stmt.setString(7, (novoPet.getDtNascimento().toString()));
+			stmt.setInt(8, novoPet.getCliente().getIdCliente());
 
 			stmt.execute();
 
@@ -56,7 +55,7 @@ public class PetDAO {
 		ResultSet resultado = null;
 		ArrayList<Pet> petsVO = new ArrayList<Pet>();
 
-		String query = "SELECT idPet, nome, porte, peso, raca, dtnascimento, sexo FROM Pet";
+		String query = "SELECT idPet, nome, porte, peso, raca, dtnascimento, sexo, especie FROM Pet";
 		try {
 
 			resultado = stmt.executeQuery(query);
@@ -70,6 +69,7 @@ public class PetDAO {
 				petVO.setRaca(resultado.getString(5));
 				petVO.setDtNascimento(LocalDate.parse(resultado.getString(6), dataFormatter));
 				petVO.setSexo(resultado.getString(7));
+				petVO.setEspecie(resultado.getString(8));
 
 				petsVO.add(petVO);
 
@@ -91,9 +91,8 @@ public class PetDAO {
 		ResultSet resultado = null;
 		ArrayList<RelatorioPet> relatorio = new ArrayList<RelatorioPet>();
 
-		String query = "SELECT p.idPet, p.nome, p.porte, p.peso, p.raca, p.especie, p.dtnascimento, p.sexo, "
-				+ "c.nome as dono,  count(proc.idprocedimento) as contagem, sum(proc.valor) as total "
-				+ "FROM Pet as p inner join cliente as c on p.idcliente = c.idcliente inner join procedimento as proc on proc.idpet = p.idpet";
+		String query = "SELECT c.idcliente, c.nome, c.sobrenome, c.endereco, c.sexo, c.telefone, c.email, "
+				+ " count(p.idpet) as QTD_ANIMAIS from cliente as c inner join pet as p on p.idcliente = c.idcliente;";
 		try {
 
 			resultado = stmt.executeQuery(query);

@@ -23,7 +23,7 @@ public class ConsultarProcedimento extends JPanel {
 	 */
 
 	private String[] colunas = { "#", "Titulo", "Dt Entrada", "Dt Saída", "Valor", "Forma Pagamento",
-			"Situação Pagamento" };
+			"Situação Pagamento", "Tipo", "Pet", "Veterinario" };
 
 	public ConsultarProcedimento() {
 		setBorder(new LineBorder(Color.GREEN, 4));
@@ -45,7 +45,7 @@ public class ConsultarProcedimento extends JPanel {
 
 				DefaultTableModel model = (DefaultTableModel) tblProcedimento.getModel();
 				for (int i = 0; i < procedimentoTabela.size(); i++) {
-					String[] novaLinha = new String[6];
+					String[] novaLinha = new String[10];
 					System.out.println(procedimentoTabela.get(i).getIdProcedimento());
 					novaLinha[0] = procedimentoTabela.get(i).getIdProcedimento() + "";
 					novaLinha[1] = procedimentoTabela.get(i).getTitulo();
@@ -53,7 +53,14 @@ public class ConsultarProcedimento extends JPanel {
 					novaLinha[3] = procedimentoTabela.get(i).getDtSaida() + "";
 					novaLinha[4] = procedimentoTabela.get(i).getValor() + "";
 					novaLinha[5] = procedimentoTabela.get(i).getFormaPagamento();
-					novaLinha[6] = procedimentoTabela.get(i).getSituacaoPagamento() + "";
+					if (procedimentoTabela.get(i).getSituacaoPagamento()) {
+						novaLinha[6] = "Pago";
+					} else {
+						novaLinha[6] = "Não Pago";
+					}
+					novaLinha[7] = procedimentoTabela.get(i).getTipo().getIdTipo() + "";
+					novaLinha[8] = procedimentoTabela.get(i).getPet().getIdPet() + "";
+					novaLinha[9] = procedimentoTabela.get(i).getVeterinario().getIdVeterinario() + "";
 					model.addRow(novaLinha);
 				}
 			}

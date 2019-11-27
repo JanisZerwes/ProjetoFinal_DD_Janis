@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import model.dto.RelatorioCliente;
 import model.vo.Cliente;
 
 public class ClienteDAO implements Base<Cliente> {
@@ -163,6 +164,45 @@ public class ClienteDAO implements Base<Cliente> {
 	public Cliente consultarPorId(int id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public ArrayList<RelatorioCliente> consultarRelatorioCliente() {
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		ArrayList<RelatorioCliente> relatorio = new ArrayList<RelatorioCliente>();
+
+		String query = "SELECT c.idcliente, c.nome, c.sobrenome, c.endereco, c.sexo, c.cpf, c.telefone, c.email, count(p.idpet) as QTD_ANIMAIS from cliente as c inner join pet as p on p.idcliente = c.idcliente";
+		try {
+
+			resultado = stmt.executeQuery(query);
+			while (resultado.next()) {
+				RelatorioCliente relatorioCliente = new RelatorioCliente();
+
+				relatorioCliente.setIdCliente(Integer.parseInt(resultado.getString(1)));
+				relatorioCliente.setNome(resultado.getString(2));
+				relatorioCliente.setSobrenome(resultado.getString(3));
+				relatorioCliente.setEndereco(resultado.getString(4));
+				relatorioCliente.setSexo(resultado.getString(5));
+				relatorioCliente.setCpf(resultado.getString(6));
+				relatorioCliente.setTelefone(resultado.getString(7));
+				relatorioCliente.setEmail(resultado.getString(8));
+				relatorioCliente.setQuantidadePets(resultado.getInt(9));
+				// relatorioCliente.setDtNascimento(LocalDate.parse(resultado.getString(7),
+				// dataFormatter));
+
+				relatorio.add(relatorioCliente);
+
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao executar a Query de Consulta de Clientes.");
+			System.out.println("Erro: " + e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return relatorio;
 	}
 
 }

@@ -144,7 +144,7 @@ public class TelaPrincipal {
 		mnProcedimentos.setForeground(Color.BLACK);
 		menuBar.add(mnProcedimentos);
 
-		JMenuItem mntmCadastroProcedimento = new JMenuItem("Cadastro");
+		JMenuItem mntmCadastroProcedimento = new JMenuItem("Cadastrar");
 		mntmCadastroProcedimento.setFont(new Font("Segoe UI", Font.PLAIN, 19));
 		mntmCadastroProcedimento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

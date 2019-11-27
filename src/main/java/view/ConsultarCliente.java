@@ -9,6 +9,7 @@ import java.util.Locale;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -16,6 +17,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Controller.ControllerCliente;
+import model.dao.ClienteDAO;
+import model.dto.RelatorioCliente;
 import model.vo.Cliente;
 
 public class ConsultarCliente extends JPanel {
@@ -107,6 +110,8 @@ public class ConsultarCliente extends JPanel {
 
 					if (excluiu) {
 						JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso");
+					} else {
+						JOptionPane.showMessageDialog(null, "Impossível excluir, clientes com animais cadastrados");
 					}
 
 				} catch (Exception e2) {
@@ -130,7 +135,23 @@ public class ConsultarCliente extends JPanel {
 		JButton btnGerarRelatorio = new JButton("Gerar Relatório");
 		btnGerarRelatorio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser jfc = new JFileChooser();
+				jfc.setDialogTitle("Salvar relatório como...");
+				int resultado = jfc.showSaveDialog(null);
+				if (resultado == JFileChooser.APPROVE_OPTION) {
+					String caminhoEscolhido = jfc.getSelectedFile().getAbsolutePath();
 
+					ControllerCliente controllerCliente = new ControllerCliente();
+					ArrayList<Cliente> clientesConsultados = controllerCliente.consultarTodosClientesController();
+
+					ClienteDAO dao = new ClienteDAO();
+//
+					ArrayList<RelatorioCliente> clientesCompleto = dao.consultarRelatorioCliente();
+//
+//					// controllerPet.gerarRelatorio(petsConsultados, caminhoEscolhido);
+//
+					controllerCliente.gerarRelatorioCompleto(clientesCompleto, caminhoEscolhido);
+				}
 			}
 		});
 		btnGerarRelatorio.setBounds(610, 340, 119, 25);

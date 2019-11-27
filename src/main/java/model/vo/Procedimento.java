@@ -34,11 +34,6 @@ public class Procedimento {
 		this.tipo = tipo;
 	}
 
-	public Procedimento(int i, String tituloDigitado, String dataEntradaDigitada, String dataSaidaDigitada,
-			String valorDigitada, String formaPagamentoDigitada, String situacaoPagamentoDigitada) {
-		// TODO Auto-generated constructor stub
-	}
-
 	public int getIdProcedimento() {
 		return idProcedimento;
 	}

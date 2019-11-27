@@ -5,6 +5,15 @@ import model.vo.Pessoa;
 public class RelatorioCliente extends Pessoa {
 	private Boolean adimplente;
 	private int idCliente;
+	private int quantidadePets;
+
+	public int getQuantidadePets() {
+		return quantidadePets;
+	}
+
+	public void setQuantidadePets(int quantidadePets) {
+		this.quantidadePets = quantidadePets;
+	}
 
 	public Boolean getAdimplente() {
 		return adimplente;

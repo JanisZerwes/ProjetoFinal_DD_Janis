@@ -3,6 +3,9 @@ package view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -10,26 +13,45 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
 import Controller.ControllerProcedimento;
+import model.dao.PetDAO;
+import model.dao.VeterinarioDAO;
+import model.vo.Pet;
 import model.vo.Procedimento;
+import model.vo.Tipo;
+import model.vo.Veterinario;
 
 public class CadastrarProcedimento extends JPanel {
+
+	DateTimeFormatter dataFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 	private JTextField txtTitulo;
 	private JTextField txtDtEntrada;
 	private JTextField txtDtSaida;
 	private JTextField txtValor;
 	private JTextField txtFormaPagamento;
-	private JTextField txtSituacaoPagamento;
 	private Procedimento novoProcedimento;
 	String[] tipo = new String[4];
+	JComboBox<Pet> cbPet;
+	private JComboBox cbTipoPagamento;
+	private JComboBox<Tipo> cbTipoProcedimento;
+	private JComboBox<Veterinario> cbVeterinario;
+	JRadioButton rbNao;
+	JRadioButton rbSim;
 
 	/**
-	 * Create the panel.
+	 * Create the panel..
 	 */
+
 	public CadastrarProcedimento() {
+		initialize();
+	}
+
+	public void initialize() {
+
 		setBorder(new LineBorder(Color.GREEN, 4));
 		setLayout(null);
 
@@ -82,10 +104,23 @@ public class CadastrarProcedimento extends JPanel {
 		lblSituaoPagamento.setBounds(12, 336, 136, 16);
 		add(lblSituaoPagamento);
 
-		txtSituacaoPagamento = new JTextField();
-		txtSituacaoPagamento.setBounds(160, 333, 116, 22);
-		add(txtSituacaoPagamento);
-		txtSituacaoPagamento.setColumns(10);
+		cbTipoPagamento = new JComboBox(tipo);
+		cbTipoPagamento.setBounds(458, 51, 129, 22);
+		cbTipoPagamento.setModel(new DefaultComboBoxModel(
+				new String[] { "Cartão à Vista", "Cartão Parcelado", "Dinheiro à Vista", "Dinheiro Parcelado" }));
+		add(cbTipoPagamento);
+
+		JLabel lblTipo = new JLabel("Tipo:");
+		lblTipo.setBounds(367, 54, 56, 16);
+		add(lblTipo);
+
+		rbSim = new JRadioButton("Sim");
+		rbSim.setBounds(149, 332, 127, 25);
+		add(rbSim);
+
+		rbNao = new JRadioButton("Não");
+		rbNao.setBounds(147, 362, 127, 25);
+		add(rbNao);
 
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
@@ -96,17 +131,27 @@ public class CadastrarProcedimento extends JPanel {
 				String dataEntradaDigitada = txtDtEntrada.getText();
 				String dataSaidaDigitada = txtDtSaida.getText();
 				String valorDigitada = txtValor.getText();
-				String formaPagamentoDigitada = txtFormaPagamento.getText();
-				String situacaoPagamentoDigitada = txtSituacaoPagamento.getText();
+				String formaPagamentoDigitada = (String) cbTipoPagamento.getSelectedItem();
+				boolean situacaoPagamentoSelecionada = false;
+				if (rbNao.isSelected()) {
+					situacaoPagamentoSelecionada = false;
+				}
 
+				if (rbSim.isSelected()) {
+					situacaoPagamentoSelecionada = true;
+				}
 				String mensagem = controllerProcedimento.validarCamposSalvar(tituloDigitado, dataEntradaDigitada,
-						dataSaidaDigitada, valorDigitada, formaPagamentoDigitada, situacaoPagamentoDigitada);
-				novoProcedimento = new Procedimento(0, tituloDigitado, dataEntradaDigitada, dataSaidaDigitada,
-						valorDigitada, formaPagamentoDigitada, situacaoPagamentoDigitada);
-				System.out.println(tituloDigitado + "Saiu do Cadastrar");
+						dataSaidaDigitada, valorDigitada, formaPagamentoDigitada, situacaoPagamentoSelecionada);
+//				int idProcedimento, Pet pet, Veterinario veterinario, String titulo, LocalDate dtEntrada,
+//				LocalDate dtSaida, double valor, String formaPagamento, boolean situacaoPagamento, Tipo tipo
+				Pet petSelecionado = (Pet) cbPet.getSelectedItem();
+				Veterinario veterinarioSelecionado = (Veterinario) cbVeterinario.getSelectedItem();
+				Tipo tipoSelecionado = (Tipo) cbTipoProcedimento.getSelectedItem();
 				if (mensagem.isEmpty()) {
-					novoProcedimento = new Procedimento(0, tituloDigitado, dataEntradaDigitada, dataSaidaDigitada,
-							valorDigitada, formaPagamentoDigitada, situacaoPagamentoDigitada);
+					novoProcedimento = new Procedimento(0, petSelecionado, veterinarioSelecionado, tituloDigitado,
+							LocalDate.parse(dataEntradaDigitada, dataFormatter),
+							LocalDate.parse(dataSaidaDigitada, dataFormatter), Double.valueOf(valorDigitada),
+							formaPagamentoDigitada, situacaoPagamentoSelecionada, tipoSelecionado);
 					novoProcedimento = controllerProcedimento.salva(novoProcedimento);
 				} else {
 					JOptionPane.showMessageDialog(null, mensagem, "Atenção", JOptionPane.WARNING_MESSAGE);
@@ -114,24 +159,54 @@ public class CadastrarProcedimento extends JPanel {
 				}
 			}
 		});
-		btnSalvar.setBounds(458, 406, 129, 25);
+		btnSalvar.setBounds(147, 429, 129, 25);
 		add(btnSalvar);
 
-		tipo[0] = "Cartão à Vista";
-		tipo[1] = "Cartão Parcelado";
-		tipo[2] = "Dinheiro à Vista";
-		tipo[3] = "Dinheiro Parcelado";
-		JComboBox cbTipo = new JComboBox();
+		cbPet = new JComboBox();
+		cbPet.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
 
-		cbTipo = new JComboBox(tipo);
-		cbTipo.setBounds(458, 51, 129, 22);
-		cbTipo.setModel(new DefaultComboBoxModel(
-				new String[] { "Cartão à Vista", "Cartão Parcelado", "Dinheiro à Vista", "Dinheiro Parcelado" }));
-		add(cbTipo);
+			}
+		});
+		cbPet.setBounds(458, 132, 129, 22);
+		add(cbPet);
+		PetDAO petDao = new PetDAO();
+		ArrayList<Pet> pets = petDao.consultarTodosPet();
+		for (Pet pet : pets) {
+			cbPet.addItem(pet);
+		}
 
-		JLabel lblTipo = new JLabel("Tipo:");
-		lblTipo.setBounds(367, 54, 56, 16);
-		add(lblTipo);
+		JLabel lblPet = new JLabel("Pet:");
+		lblPet.setBounds(367, 135, 56, 16);
+		add(lblPet);
+		cbTipoProcedimento = new JComboBox();
+		cbTipoProcedimento.setBounds(458, 199, 129, 22);
+		Tipo t1 = new Tipo(1, "Cirurgia");
+		Tipo t2 = new Tipo(2, "Tosa");
+		Tipo t3 = new Tipo(3, "Castração");
+		Tipo t4 = new Tipo(4, "Consulta Periódica");
+		cbTipoProcedimento.addItem(t1);
+		cbTipoProcedimento.addItem(t2);
+		cbTipoProcedimento.addItem(t3);
+		cbTipoProcedimento.addItem(t4);
+		add(cbTipoProcedimento);
 
+		JLabel lblTipo_1 = new JLabel("Tipo:");
+		lblTipo_1.setBounds(367, 202, 56, 16);
+		add(lblTipo_1);
+
+		JLabel lblVeterinrio = new JLabel("Veterin\u00E1rio:");
+		lblVeterinrio.setBounds(367, 281, 79, 16);
+		add(lblVeterinrio);
+
+		cbVeterinario = new JComboBox();
+		cbVeterinario.setBounds(458, 278, 129, 22);
+		add(cbVeterinario);
+
+		VeterinarioDAO veterinarioDAO = new VeterinarioDAO();
+		ArrayList<Veterinario> veterinarios = veterinarioDAO.consultarTodos();
+		for (Veterinario veterinario : veterinarios) {
+			cbVeterinario.addItem(veterinario);
+		}
 	}
 }

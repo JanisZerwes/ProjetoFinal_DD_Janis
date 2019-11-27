@@ -15,8 +15,7 @@ public class Veterinario extends Pessoa {
 
 	@Override
 	public String toString() {
-		return "Veterinario [idVeterinario=" + idVeterinario + ", certificado=" + certificado + ", crmv=" + crmv
-				+ ", veterinario=" + veterinario + "]";
+		return idVeterinario + ". " + nome;
 	}
 
 	public Veterinario(int i, String nomeDigitado, String sobrenomeDigitado, String enderecoDigitado,

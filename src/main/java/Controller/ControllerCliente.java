@@ -3,6 +3,9 @@ package Controller;
 import java.util.ArrayList;
 
 import model.bo.ClienteBO;
+import model.dao.PetDAO;
+import model.dto.GeradorDePlanilha;
+import model.dto.RelatorioCliente;
 import model.vo.Cliente;
 
 public class ControllerCliente {
@@ -67,6 +70,12 @@ public class ControllerCliente {
 	public Cliente consultarClienteController(Cliente clienteVO) {
 		ClienteBO clienteBO = new ClienteBO();
 		return clienteBO.consultarClienteBO(clienteVO);
+	}
+
+	public void gerarRelatorioCompleto(ArrayList<RelatorioCliente> clientesCompleto, String caminhoEscolhido) {
+		PetDAO petDAO = new PetDAO();
+		GeradorDePlanilha gerador = new GeradorDePlanilha();
+		gerador.gerarPlanilhaClienteCompleta(clientesCompleto, caminhoEscolhido);
 	}
 
 }

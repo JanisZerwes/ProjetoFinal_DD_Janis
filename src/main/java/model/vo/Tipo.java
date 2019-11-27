@@ -2,17 +2,22 @@ package model.vo;
 
 public class Tipo {
 	private int idTipo;
-	private String Descricao;
+	private String descricao;
+
+	@Override
+	public String toString() {
+		return descricao;
+	}
 
 	public Tipo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Tipo(int idTipo, String descricao, Procedimento procedimento) {
+	public Tipo(int idTipo, String descricao) {
 		super();
 		this.idTipo = idTipo;
-		Descricao = descricao;
+		this.descricao = descricao;
 
 	}
 
@@ -25,11 +30,11 @@ public class Tipo {
 	}
 
 	public String getDescricao() {
-		return Descricao;
+		return descricao;
 	}
 
 	public void setDescricao(String descricao) {
-		Descricao = descricao;
+		descricao = descricao;
 	}
 
 }

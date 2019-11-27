@@ -8,7 +8,8 @@ import model.vo.Procedimento;
 public class ControllerProcedimento {
 
 	public static Procedimento salva(Procedimento novoProcedimento) {
-		return Procedimento.salvar(novoProcedimento);
+		ProcedimentoBO bo = new ProcedimentoBO();
+		return bo.salvar(novoProcedimento);
 
 	}
 
@@ -38,7 +39,7 @@ public class ControllerProcedimento {
 	}
 
 	public String validarCamposSalvar(String tituloDigitado, String dataEntradaDigitada, String dataSaidaDigitada,
-			String valorDigitada, String formaPagamentoDigitada, String situacaoPagamentoDigitada) {
+			String valorDigitada, String formaPagamentoDigitada, boolean situacaoPagamentoDigitada) {
 		String mensagem = "";
 
 		if (tituloDigitado.isEmpty() || tituloDigitado.trim().length() < 3) {
@@ -58,9 +59,6 @@ public class ControllerProcedimento {
 		}
 		if (formaPagamentoDigitada.isEmpty()) {
 			mensagem += "Digite a forma de pagamento \n";
-		}
-		if (situacaoPagamentoDigitada.isEmpty()) {
-			mensagem += "Digite a situação do pagamento \n";
 		}
 
 		return mensagem;

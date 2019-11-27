@@ -26,9 +26,10 @@ public class Cliente extends Pessoa {
 
 	@Override
 	public String toString() {
-		return "Cliente [adimplente=" + adimplente + ", idCliente=" + idCliente + ", nome=" + nome + ", sobrenome="
-				+ sobrenome + ", endereco=" + endereco + ", sexo=" + sexo + ", cpf=" + cpf + ", telefone=" + telefone
-				+ ", email=" + email + "]";
+//		return "Cliente [adimplente=" + adimplente + ", idCliente=" + idCliente + ", nome=" + nome + ", sobrenome="
+//				+ sobrenome + ", endereco=" + endereco + ", sexo=" + sexo + ", cpf=" + cpf + ", telefone=" + telefone
+//				+ ", email=" + email + "]";
+		return idCliente + ". " + nome;
 	}
 
 	public void setIdCliente(int idCliente) {
