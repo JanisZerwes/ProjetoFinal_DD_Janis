@@ -9,6 +9,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
@@ -190,6 +191,22 @@ public class ConsultarProcedimento extends JPanel {
 		add(btnNewButton);
 
 		JButton btnAtualizar = new JButton("Atualizar");
+		btnAtualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Procedimento procedimentoSelecionado = new Procedimento();
+
+				try {
+					Object idSelecionado = tblProcedimento.getModel().getValueAt(tblProcedimento.getSelectedRow(), 0);
+					procedimentoSelecionado.setIdProcedimento(Integer.valueOf((String) idSelecionado));
+					AtualizarProcedimentoFrame atualizarProcedimento = new AtualizarProcedimentoFrame(
+							procedimentoSelecionado);
+					atualizarProcedimento.setVisible(true);
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "Selecione uma linha");
+					System.out.println(e2.getMessage());
+				}
+			}
+		});
 		btnAtualizar.setBounds(183, 282, 97, 25);
 		add(btnAtualizar);
 

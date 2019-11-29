@@ -70,4 +70,10 @@ public class ControllerProcedimento {
 		PetBO petBO = new PetBO();
 		return petBO.consultarProcedimentosPorPet(petVO);
 	}
+
+	public String validarCamposSalvar(String tituloDigitado, String dataEntradaDigitada, String dataSaidaDigitada,
+			String valorDigitada, String formaPagamentoDigitada, String situacaoPagamentoDigitada) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

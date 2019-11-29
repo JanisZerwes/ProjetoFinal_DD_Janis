@@ -112,9 +112,10 @@ public class AtualizarProcedimentoFrame extends JFrame {
 						dataSaidaDigitada, valorDigitada, formaPagamentoDigitada, situacaoPagamentoDigitada);
 
 				if (mensagem.isEmpty()) {
-					novoProcedimento = new Procedimento(0, tituloDigitado, dataEntradaDigitada, dataSaidaDigitada,
+					Procedimento atualizarProcedimento;
+					atualizarProcedimento = new Procedimento(tituloDigitado, dataEntradaDigitada, dataSaidaDigitada,
 							valorDigitada, formaPagamentoDigitada, situacaoPagamentoDigitada);
-					novoProcedimento = controllerProcedimento.salva(novoProcedimento);
+					controllerProcedimento.atualizarProcedimentoController(atualizarProcedimento);
 				} else {
 					JOptionPane.showMessageDialog(null, mensagem, "Atenção", JOptionPane.WARNING_MESSAGE);
 

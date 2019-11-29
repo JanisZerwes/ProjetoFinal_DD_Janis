@@ -181,7 +181,7 @@ public class TelaPrincipal {
 		mnRelatrio.setForeground(Color.BLACK);
 		menuBar.add(mnRelatrio);
 
-		JMenuItem mntmGerarRelatrio = new JMenuItem("Gerar Relat\u00F3rio");
+		JMenuItem mntmGerarRelatrio = new JMenuItem("Gerar Relatório");
 		mntmGerarRelatrio.setFont(new Font("Segoe UI", Font.PLAIN, 19));
 		mnRelatrio.add(mntmGerarRelatrio);
 
