@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -113,13 +114,15 @@ public class CadastrarCliente extends JPanel {
 		rbMasculino.setBounds(248, 178, 127, 25);
 		add(rbMasculino);
 
+		ButtonGroup groupSexo = new ButtonGroup();
+		groupSexo.add(rbFemenino);
+		groupSexo.add(rbMasculino);
+
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.setBounds(514, 282, 98, 25);
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ControllerCliente controllerCliente = new ControllerCliente();
-
-				;
 				String nomeDigitado = txtNome.getText();
 				String sobrenomeDigitado = txtSobrenome.getText();
 				String enderecoDigitado = txtEndereco.getText();

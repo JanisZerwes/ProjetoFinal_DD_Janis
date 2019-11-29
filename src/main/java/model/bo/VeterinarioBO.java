@@ -2,7 +2,9 @@ package model.bo;
 
 import java.util.ArrayList;
 
+import model.dao.ProcedimentoDAO;
 import model.dao.VeterinarioDAO;
+import model.vo.Procedimento;
 import model.vo.Veterinario;
 
 public class VeterinarioBO {
@@ -37,6 +39,17 @@ public class VeterinarioBO {
 			System.out.println("\n Lista de clientes está vazia.");
 		}
 		return veterinariosVO;
+	}
+
+	public ArrayList<Procedimento> consultarProcedimentosPorPet(Veterinario veterinario) {
+		ProcedimentoDAO procedimentoDAO = new ProcedimentoDAO();
+		ArrayList<Procedimento> procedimentosVO = procedimentoDAO
+				.consultarProcedimentosPorVeterinario(veterinario.getIdVeterinario());
+
+		if (procedimentosVO.isEmpty()) {
+			System.out.println("\nLista de procedimentoVO está vazia.");
+		}
+		return procedimentosVO;
 	}
 
 }

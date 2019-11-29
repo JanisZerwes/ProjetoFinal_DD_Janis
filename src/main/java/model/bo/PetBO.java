@@ -3,8 +3,10 @@ package model.bo;
 import java.util.ArrayList;
 
 import model.dao.PetDAO;
+import model.dao.ProcedimentoDAO;
 import model.dto.GeradorDePlanilha;
 import model.vo.Pet;
+import model.vo.Procedimento;
 
 public class PetBO {
 
@@ -61,6 +63,16 @@ public class PetBO {
 	public void gerarRelatorio(ArrayList<Pet> petsConsultados, String caminhoEscolhido) {
 		GeradorDePlanilha gerador = new GeradorDePlanilha();
 		gerador.gerarPlanilhaPet(petsConsultados, caminhoEscolhido);
+	}
+
+	public ArrayList<Procedimento> consultarProcedimentosPorPet(Pet petVO) {
+		ProcedimentoDAO procedimentoDAO = new ProcedimentoDAO();
+		ArrayList<Procedimento> procedimentosVO = procedimentoDAO.consultarProcedimentosPorPet(petVO.getIdPet());
+
+		if (procedimentosVO.isEmpty()) {
+			System.out.println("\nLista de procedimentoVO está vazia.");
+		}
+		return procedimentosVO;
 	}
 
 }

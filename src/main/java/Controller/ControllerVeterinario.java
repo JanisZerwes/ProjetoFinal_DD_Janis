@@ -3,6 +3,7 @@ package Controller;
 import java.util.ArrayList;
 
 import model.bo.VeterinarioBO;
+import model.vo.Procedimento;
 import model.vo.Veterinario;
 
 public class ControllerVeterinario {
@@ -72,5 +73,10 @@ public class ControllerVeterinario {
 	public Veterinario consultarVeterinarioController(Veterinario veterinarioVO) {
 		VeterinarioBO veterinarioBO = new VeterinarioBO();
 		return veterinarioVO.consultarVeterinarioBO(veterinarioVO);
+	}
+
+	public ArrayList<Procedimento> consultarProcedimentosPorProcedimento(Veterinario veterinario) {
+		VeterinarioBO veterinarioBO = new VeterinarioBO();
+		return veterinarioBO.consultarProcedimentosPorPet(veterinario);
 	}
 }

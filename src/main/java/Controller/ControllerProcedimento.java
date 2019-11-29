@@ -2,7 +2,9 @@ package Controller;
 
 import java.util.ArrayList;
 
+import model.bo.PetBO;
 import model.bo.ProcedimentoBO;
+import model.vo.Pet;
 import model.vo.Procedimento;
 
 public class ControllerProcedimento {
@@ -62,5 +64,10 @@ public class ControllerProcedimento {
 		}
 
 		return mensagem;
+	}
+
+	public ArrayList<Procedimento> consultarProcedimentosPorPet(Pet petVO) {
+		PetBO petBO = new PetBO();
+		return petBO.consultarProcedimentosPorPet(petVO);
 	}
 }

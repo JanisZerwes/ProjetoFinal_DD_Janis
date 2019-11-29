@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
 public class TelaPrincipal {
 
@@ -44,10 +45,10 @@ public class TelaPrincipal {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.getContentPane().setBackground(Color.GREEN);
+		criarPainelVerde();
+
 		frame.setBounds(100, 100, 987, 669);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
 
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -162,6 +163,13 @@ public class TelaPrincipal {
 				ConsultarProcedimento consultarProcedimento = new ConsultarProcedimento();
 				frame.setContentPane(consultarProcedimento);
 				frame.revalidate();
+
+				consultarProcedimento.getBtnVoltar().addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						// mudar o contentPane da tela principal para verde
+						criarPainelVerde();
+					}
+				});
 			}
 		});
 		mntmConsultaProcedimento.setFont(new Font("Segoe UI", Font.PLAIN, 19));
@@ -183,5 +191,12 @@ public class TelaPrincipal {
 		mnSobre.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		mnSobre.setForeground(Color.BLACK);
 		menuBar.add(mnSobre);
+	}
+
+	private void criarPainelVerde() {
+		frame.setContentPane(new JPanel());
+		frame.getContentPane().setBackground(Color.GREEN);
+		frame.getContentPane().setLayout(null);
+		frame.revalidate();
 	}
 }

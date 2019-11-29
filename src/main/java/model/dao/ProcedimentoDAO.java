@@ -87,16 +87,21 @@ public class ProcedimentoDAO {
 				} else {
 					procedimentoVO.setSituacaoPagamento(false);
 				}
+
 				Tipo tipo = new Tipo(resultado.getInt(8), "");
 				procedimentoVO.setTipo(tipo);
 
-				Pet pet = new Pet();
-				pet.setIdPet(resultado.getInt(9));
+				PetDAO petDAO = new PetDAO();
+				Pet pet = petDAO.consultarPetPorID(resultado.getInt(9));
 				procedimentoVO.setPet(pet);
 
-				Veterinario veterinario = new Veterinario();
-				veterinario.setIdVeterinario(resultado.getInt(10));
-				procedimentoVO.setVeterinario(veterinario);
+				VeterinarioDAO vetDAO = new VeterinarioDAO();
+				Veterinario vet = vetDAO.consultarVeterinarioPorID(resultado.getInt(10));
+				procedimentoVO.setVeterinario(vet);
+
+//				Veterinario veterinario = new Veterinario();
+//				veterinario.setIdVeterinario(resultado.getInt(10));
+//				procedimentoVO.setVeterinario(veterinario);
 
 				procedimentosVO.add(procedimentoVO);
 
@@ -149,6 +154,118 @@ public class ProcedimentoDAO {
 	public Cliente consultarPorId(int id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public ArrayList<Procedimento> consultarProcedimentosPorPet(int idPet) {
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		ArrayList<Procedimento> procedimentosVO = new ArrayList<Procedimento>();
+
+		String query = "SELECT idProcedimento, titulo, dtEntrada, dtSaida, valor, formaPagamento, situacaoPagamento, idtipo, idpet, idveterinario FROM Procedimento where idpet = "
+				+ idPet;
+
+		try {
+
+			resultado = stmt.executeQuery(query);
+			while (resultado.next()) {
+				Procedimento procedimentoVO = new Procedimento();
+
+				procedimentoVO.setIdProcedimento(Integer.parseInt(resultado.getString(1)));
+				procedimentoVO.setTitulo(resultado.getString(2));
+				procedimentoVO.setDtEntrada(LocalDate.parse(resultado.getString(3), dataFormatter));
+				procedimentoVO.setDtSaida(LocalDate.parse(resultado.getString(4), dataFormatter));
+				procedimentoVO.setValor(resultado.getDouble(5));
+				procedimentoVO.setFormaPagamento(resultado.getString(6));
+				if (resultado.getString(7).equals("Pago")) {
+					procedimentoVO.setSituacaoPagamento(true);
+				} else {
+					procedimentoVO.setSituacaoPagamento(false);
+				}
+
+				Tipo tipo = new Tipo(resultado.getInt(8), "");
+				procedimentoVO.setTipo(tipo);
+
+				PetDAO petDAO = new PetDAO();
+				Pet pet = petDAO.consultarPetPorID(resultado.getInt(9));
+				procedimentoVO.setPet(pet);
+
+				VeterinarioDAO vetDAO = new VeterinarioDAO();
+				Veterinario vet = vetDAO.consultarVeterinarioPorID(resultado.getInt(10));
+				procedimentoVO.setVeterinario(vet);
+
+//				Veterinario veterinario = new Veterinario();
+//				veterinario.setIdVeterinario(resultado.getInt(10));
+//				procedimentoVO.setVeterinario(veterinario);
+
+				procedimentosVO.add(procedimentoVO);
+
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao executar a Query de Consulta de procedimentos.");
+			System.out.println("Erro: " + e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return procedimentosVO;
+	}
+
+	public ArrayList<Procedimento> consultarProcedimentosPorVeterinario(int idVeterinario) {
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		ArrayList<Procedimento> procedimentosVO = new ArrayList<Procedimento>();
+
+		String query = "SELECT idProcedimento, titulo, dtEntrada, dtSaida, valor, formaPagamento, situacaoPagamento, idtipo, idpet, idveterinario FROM Procedimento where idveterinario = "
+				+ idVeterinario;
+
+		try {
+
+			resultado = stmt.executeQuery(query);
+			while (resultado.next()) {
+				Procedimento procedimentoVO = new Procedimento();
+
+				procedimentoVO.setIdProcedimento(Integer.parseInt(resultado.getString(1)));
+				procedimentoVO.setTitulo(resultado.getString(2));
+				procedimentoVO.setDtEntrada(LocalDate.parse(resultado.getString(3), dataFormatter));
+				procedimentoVO.setDtSaida(LocalDate.parse(resultado.getString(4), dataFormatter));
+				procedimentoVO.setValor(resultado.getDouble(5));
+				procedimentoVO.setFormaPagamento(resultado.getString(6));
+				if (resultado.getString(7).equals("Pago")) {
+					procedimentoVO.setSituacaoPagamento(true);
+				} else {
+					procedimentoVO.setSituacaoPagamento(false);
+				}
+
+				Tipo tipo = new Tipo(resultado.getInt(8), "");
+				procedimentoVO.setTipo(tipo);
+
+				PetDAO petDAO = new PetDAO();
+				Pet pet = petDAO.consultarPetPorID(resultado.getInt(9));
+				procedimentoVO.setPet(pet);
+
+				VeterinarioDAO vetDAO = new VeterinarioDAO();
+				Veterinario vet = vetDAO.consultarVeterinarioPorID(resultado.getInt(10));
+				procedimentoVO.setVeterinario(vet);
+
+//				Veterinario veterinario = new Veterinario();
+//				veterinario.setIdVeterinario(resultado.getInt(10));
+//				procedimentoVO.setVeterinario(veterinario);
+
+				procedimentosVO.add(procedimentoVO);
+
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao executar a Query de Consulta de procedimentos.");
+			System.out.println("Erro: " + e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return procedimentosVO;
 	}
 
 }
