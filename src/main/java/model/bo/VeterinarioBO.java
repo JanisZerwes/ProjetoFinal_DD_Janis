@@ -21,9 +21,9 @@ public class VeterinarioBO {
 
 	}
 
-	public void excluirVeterinarioBO(Veterinario veterinarioVO) {
-		// TODO Auto-generated method stub
-
+	public boolean excluirVeterinarioBO(Veterinario veterinarioVO) {
+		VeterinarioDAO veterinarioDAO = new VeterinarioDAO();
+		return veterinarioDAO.excluir(veterinarioVO.getIdVeterinario());
 	}
 
 	public void atualizarVeterinarioBO(Veterinario veterinarioVO) {

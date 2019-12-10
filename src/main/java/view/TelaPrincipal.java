@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 
 public class TelaPrincipal {
 
-	private JFrame frame;
+	private JFrame frmClnicaVeterinria;
 
 	/**
 	 * Launch the application.
@@ -25,7 +25,7 @@ public class TelaPrincipal {
 			public void run() {
 				try {
 					TelaPrincipal window = new TelaPrincipal();
-					window.frame.setVisible(true);
+					window.frmClnicaVeterinria.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -44,14 +44,15 @@ public class TelaPrincipal {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
+		frmClnicaVeterinria = new JFrame();
+		frmClnicaVeterinria.setTitle("Clínica Veterinária");
 		criarPainelVerde();
 
-		frame.setBounds(100, 100, 987, 669);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmClnicaVeterinria.setBounds(100, 100, 963, 678);
+		frmClnicaVeterinria.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JMenuBar menuBar = new JMenuBar();
-		frame.setJMenuBar(menuBar);
+		frmClnicaVeterinria.setJMenuBar(menuBar);
 
 		JMenu mnCliente = new JMenu("Cliente");
 		mnCliente.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icones/icones/icons8-fila.png")));
@@ -64,8 +65,8 @@ public class TelaPrincipal {
 		mntmCadastroCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CadastrarCliente cadastrarC = new CadastrarCliente();
-				frame.setContentPane(cadastrarC);
-				frame.revalidate();
+				frmClnicaVeterinria.setContentPane(cadastrarC);
+				frmClnicaVeterinria.revalidate();
 			}
 		});
 		mnCliente.add(mntmCadastroCliente);
@@ -75,8 +76,16 @@ public class TelaPrincipal {
 		mntmCosultaCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ConsultarCliente consultarCliente = new ConsultarCliente();
-				frame.setContentPane(consultarCliente);
-				frame.revalidate();
+				frmClnicaVeterinria.setContentPane(consultarCliente);
+				frmClnicaVeterinria.revalidate();
+				consultarCliente.getBtnVoltar().addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						// mudar o contentPane da tela principal para verde
+						criarPainelVerde();
+					}
+
+				});
+
 			}
 		});
 		mnCliente.add(mntmCosultaCliente);
@@ -92,8 +101,8 @@ public class TelaPrincipal {
 		mntmCadastroVeterinario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CadastrarVeterinario cadastrarVeterinario = new CadastrarVeterinario();
-				frame.setContentPane(cadastrarVeterinario);
-				frame.revalidate();
+				frmClnicaVeterinria.setContentPane(cadastrarVeterinario);
+				frmClnicaVeterinria.revalidate();
 			}
 		});
 		mnVeterinrio.add(mntmCadastroVeterinario);
@@ -101,11 +110,21 @@ public class TelaPrincipal {
 		JMenuItem mntmConsultarVeterinario = new JMenuItem("Consultar");
 		mntmConsultarVeterinario.setFont(new Font("Segoe UI", Font.PLAIN, 19));
 		mntmConsultarVeterinario.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 				ConsultarVeterinario consultarVeterinario = new ConsultarVeterinario();
-				frame.setContentPane(consultarVeterinario);
-				frame.revalidate();
+				frmClnicaVeterinria.setContentPane(consultarVeterinario);
+				frmClnicaVeterinria.revalidate();
+				consultarVeterinario.getBtnVoltar().addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						// mudar o contentPane da tela principal para verde
+						criarPainelVerde();
+					}
+
+				});
+
 			}
+
 		});
 		mnVeterinrio.add(mntmConsultarVeterinario);
 
@@ -121,8 +140,8 @@ public class TelaPrincipal {
 		mntmCadastroPet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CadastrarPet cadastrarPet = new CadastrarPet();
-				frame.setContentPane(cadastrarPet);
-				frame.revalidate();
+				frmClnicaVeterinria.setContentPane(cadastrarPet);
+				frmClnicaVeterinria.revalidate();
 			}
 		});
 		mnPet.add(mntmCadastroPet);
@@ -131,9 +150,15 @@ public class TelaPrincipal {
 		mntmConsultarPet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ConsultarPet consultarPet = new ConsultarPet();
-				frame.setContentPane(consultarPet);
-				frame.revalidate();
+				frmClnicaVeterinria.setContentPane(consultarPet);
+				frmClnicaVeterinria.revalidate();
+				consultarPet.getBtnVoltar().addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						// mudar o contentPane da tela principal para verde
+						criarPainelVerde();
 
+					}
+				});
 			}
 		});
 		mntmConsultarPet.setFont(new Font("Segoe UI", Font.PLAIN, 19));
@@ -150,8 +175,8 @@ public class TelaPrincipal {
 		mntmCadastroProcedimento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CadastrarProcedimento cadastrarProcedimento = new CadastrarProcedimento();
-				frame.setContentPane(cadastrarProcedimento);
-				frame.revalidate();
+				frmClnicaVeterinria.setContentPane(cadastrarProcedimento);
+				frmClnicaVeterinria.revalidate();
 
 			}
 		});
@@ -161,8 +186,8 @@ public class TelaPrincipal {
 		mntmConsultaProcedimento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ConsultarProcedimento consultarProcedimento = new ConsultarProcedimento();
-				frame.setContentPane(consultarProcedimento);
-				frame.revalidate();
+				frmClnicaVeterinria.setContentPane(consultarProcedimento);
+				frmClnicaVeterinria.revalidate();
 
 				consultarProcedimento.getBtnVoltar().addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -175,16 +200,6 @@ public class TelaPrincipal {
 		mntmConsultaProcedimento.setFont(new Font("Segoe UI", Font.PLAIN, 19));
 		mnProcedimentos.add(mntmConsultaProcedimento);
 
-		JMenu mnRelatrio = new JMenu("Relat\u00F3rio");
-		mnRelatrio.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icones/png/006-newspaper.png")));
-		mnRelatrio.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		mnRelatrio.setForeground(Color.BLACK);
-		menuBar.add(mnRelatrio);
-
-		JMenuItem mntmGerarRelatrio = new JMenuItem("Gerar Relatório");
-		mntmGerarRelatrio.setFont(new Font("Segoe UI", Font.PLAIN, 19));
-		mnRelatrio.add(mntmGerarRelatrio);
-
 		JMenu mnSobre = new JMenu("Sobre");
 		mnSobre.setIcon(
 				new ImageIcon(TelaPrincipal.class.getResource("/icones/png/007-questions-about-abecedary.png")));
@@ -194,9 +209,9 @@ public class TelaPrincipal {
 	}
 
 	private void criarPainelVerde() {
-		frame.setContentPane(new JPanel());
-		frame.getContentPane().setBackground(Color.GREEN);
-		frame.getContentPane().setLayout(null);
-		frame.revalidate();
+		frmClnicaVeterinria.setContentPane(new JPanel());
+		frmClnicaVeterinria.getContentPane().setBackground(Color.GREEN);
+		frmClnicaVeterinria.getContentPane().setLayout(null);
+		frmClnicaVeterinria.revalidate();
 	}
 }

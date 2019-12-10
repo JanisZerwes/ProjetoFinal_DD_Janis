@@ -147,4 +147,27 @@ public class VeterinarioDAO {
 		return (resultado > 0);
 
 	}
+
+	public boolean excluir(int idVeterinario) {
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		int resultado = 0;
+
+		String query = "DELETE FROM VETERINARIO WHERE idveterinario = " + idVeterinario;
+		try {
+			resultado = stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			System.out.println("Erro ao executar a Query de Exclusão do Veterinario.");
+			System.out.println("Erro: " + e.getMessage());
+		} finally {
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return (resultado > 0);
+	}
+
+	public ArrayList<Veterinario> consultarRelatorioVeterinario() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

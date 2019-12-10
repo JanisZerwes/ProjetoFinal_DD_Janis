@@ -3,6 +3,8 @@ package Controller;
 import java.util.ArrayList;
 
 import model.bo.VeterinarioBO;
+import model.dao.VeterinarioDAO;
+import model.dto.GeradorDePlanilhaVeterinario;
 import model.vo.Procedimento;
 import model.vo.Veterinario;
 
@@ -55,9 +57,9 @@ public class ControllerVeterinario {
 		veterinarioBO.cadastrarVeterinarioBO(veterinarioBO);
 	}
 
-	public void excluirVeterinarioController(Veterinario veterinarioVO) {
+	public boolean excluirVeterinarioController(Veterinario veterinarioVO) {
 		VeterinarioBO veterinarioBO = new VeterinarioBO();
-		veterinarioBO.excluirVeterinarioBO(veterinarioVO);
+		return veterinarioBO.excluirVeterinarioBO(veterinarioVO);
 	}
 
 	public void atualizarVeterinarioController(Veterinario veterinarioVO) {
@@ -78,5 +80,12 @@ public class ControllerVeterinario {
 	public ArrayList<Procedimento> consultarProcedimentosPorProcedimento(Veterinario veterinario) {
 		VeterinarioBO veterinarioBO = new VeterinarioBO();
 		return veterinarioBO.consultarProcedimentosPorPet(veterinario);
+	}
+
+	public void gerarRelatorioCompleto(ArrayList<Veterinario> veterinariosCompleto, String caminhoEscolhido) {
+		VeterinarioDAO veterinarioDAO = new VeterinarioDAO();
+		GeradorDePlanilhaVeterinario gerador = new GeradorDePlanilhaVeterinario();
+		gerador.gerarPlanilhaClienteCompleta(veterinariosCompleto, caminhoEscolhido);
+
 	}
 }

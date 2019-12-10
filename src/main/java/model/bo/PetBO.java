@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import model.dao.PetDAO;
 import model.dao.ProcedimentoDAO;
 import model.dto.GeradorDePlanilha;
+import model.dto.SeletorProcedimento;
 import model.vo.Pet;
 import model.vo.Procedimento;
 
@@ -65,14 +66,10 @@ public class PetBO {
 		gerador.gerarPlanilhaPet(petsConsultados, caminhoEscolhido);
 	}
 
-	public ArrayList<Procedimento> consultarProcedimentosPorPet(Pet petVO) {
+	public ArrayList<Procedimento> consultarProcedimentosPorPet(SeletorProcedimento seletor) {
 		ProcedimentoDAO procedimentoDAO = new ProcedimentoDAO();
-		ArrayList<Procedimento> procedimentosVO = procedimentoDAO.consultarProcedimentosPorPet(petVO.getIdPet());
 
-		if (procedimentosVO.isEmpty()) {
-			System.out.println("\nLista de procedimentoVO está vazia.");
-		}
-		return procedimentosVO;
+		return procedimentoDAO.consultarProcedimentosComFiltro(seletor);
 	}
 
 }

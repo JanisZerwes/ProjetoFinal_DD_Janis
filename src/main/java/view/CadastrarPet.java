@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -88,6 +89,7 @@ public class CadastrarPet extends JPanel {
 		JLabel lblDono = new JLabel("Dono:");
 		lblDono.setBounds(326, 185, 56, 16);
 		add(lblDono);
+		cbCliente.setSelectedIndex(-1);
 
 		txtPorte = new JTextField();
 		txtPorte.setBounds(169, 63, 116, 22);
@@ -114,11 +116,14 @@ public class CadastrarPet extends JPanel {
 		JLabel lblRaa = new JLabel("Ra\u00E7a:");
 		lblRaa.setBounds(12, 142, 56, 16);
 		add(lblRaa);
+		cbEspecie.setSelectedIndex(-1);
 
 		txtRaca = new JTextField();
 		txtRaca.setBounds(169, 139, 116, 22);
 		add(txtRaca);
 		txtRaca.setColumns(10);
+
+		ButtonGroup group = new ButtonGroup();
 
 		final JRadioButton rbFemea = new JRadioButton("Fêmea");
 		rbFemea.setBounds(12, 233, 127, 25);
@@ -127,6 +132,10 @@ public class CadastrarPet extends JPanel {
 		final JRadioButton rbMacho = new JRadioButton("Macho");
 		rbMacho.setBounds(158, 233, 127, 25);
 		add(rbMacho);
+
+		ButtonGroup groupSexo = new ButtonGroup();
+		groupSexo.add(rbFemea);
+		groupSexo.add(rbMacho);
 
 		JButton btnCadastrar = new JButton("Salvar");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -161,6 +170,10 @@ public class CadastrarPet extends JPanel {
 							porteDigitado, cbEspecie.getSelectedItem().toString(), racaDigitada, sexo);
 					System.out.println(novoPet.getDtNascimento() + "impressao tela botao castrato 2");
 					novoPet = controllerPet.salva(novoPet);
+
+					if (novoPet.getIdPet() != 0) {
+						JOptionPane.showMessageDialog(null, "Pet Cadastrado com Sucesso.");
+					}
 				} else {
 					JOptionPane.showMessageDialog(null, mensagem, "Atenção", JOptionPane.WARNING_MESSAGE);
 				}

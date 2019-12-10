@@ -3,7 +3,6 @@ package view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -16,6 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+
+import com.github.lgooddatepicker.components.DatePicker;
 
 import Controller.ControllerProcedimento;
 import model.dao.PetDAO;
@@ -30,6 +31,9 @@ public class CadastrarProcedimento extends JPanel {
 	DateTimeFormatter dataFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 	private JTextField txtTitulo;
 	private JTextField txtDtEntrada;
+	private DatePicker dataEntrada;
+	private DatePicker dataSaida;
+
 	private JTextField txtDtSaida;
 	private JTextField txtValor;
 	private JTextField txtFormaPagamento;
@@ -66,21 +70,31 @@ public class CadastrarProcedimento extends JPanel {
 
 		JLabel lblDataEntrada = new JLabel("Data Entrada:");
 		lblDataEntrada.setBounds(12, 92, 91, 16);
+
 		add(lblDataEntrada);
 
-		txtDtEntrada = new JTextField();
-		txtDtEntrada.setBounds(160, 89, 116, 22);
-		add(txtDtEntrada);
-		txtDtEntrada.setColumns(10);
+		// txtDtEntrada = new JTextField();
+		// txtDtEntrada.setBounds(160, 89, 116, 22);
+
+		dataEntrada = new DatePicker();
+		dataEntrada.setBounds(160, 89, 300, 30);
+		add(dataEntrada);
+
+		// add(txtDtEntrada);
+		// txtDtEntrada.setColumns(10);
 
 		JLabel lblDataSada = new JLabel("Data Sa\u00EDda:");
 		lblDataSada.setBounds(12, 157, 91, 16);
 		add(lblDataSada);
 
-		txtDtSaida = new JTextField();
-		txtDtSaida.setBounds(160, 151, 116, 22);
-		add(txtDtSaida);
-		txtDtSaida.setColumns(10);
+//		txtDtSaida = new JTextField();
+//		txtDtSaida.setBounds(160, 151, 116, 22);
+//		add(txtDtSaida);
+//		txtDtSaida.setColumns(10);
+
+		dataSaida = new DatePicker();
+		dataSaida.setBounds(160, 151, 300, 30);
+		add(dataSaida);
 
 		JLabel lblValor = new JLabel("Valor:");
 		lblValor.setBounds(12, 222, 56, 16);
@@ -105,13 +119,13 @@ public class CadastrarProcedimento extends JPanel {
 		add(lblSituaoPagamento);
 
 		cbTipoPagamento = new JComboBox(tipo);
-		cbTipoPagamento.setBounds(458, 51, 129, 22);
+		cbTipoPagamento.setBounds(605, 51, 129, 22);
 		cbTipoPagamento.setModel(new DefaultComboBoxModel(
 				new String[] { "Cartão à Vista", "Cartão Parcelado", "Dinheiro à Vista", "Dinheiro Parcelado" }));
 		add(cbTipoPagamento);
-
+		cbTipoPagamento.setSelectedIndex(-1);
 		JLabel lblTipo = new JLabel("Tipo:");
-		lblTipo.setBounds(367, 54, 56, 16);
+		lblTipo.setBounds(537, 54, 56, 16);
 		add(lblTipo);
 
 		rbSim = new JRadioButton("Sim");
@@ -125,11 +139,12 @@ public class CadastrarProcedimento extends JPanel {
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+
 				ControllerProcedimento controllerProcedimento = new ControllerProcedimento();
 
 				String tituloDigitado = txtTitulo.getText();
-				String dataEntradaDigitada = txtDtEntrada.getText();
-				String dataSaidaDigitada = txtDtSaida.getText();
+				String dataEntradaDigitada = dataEntrada.getText();
+				String dataSaidaDigitada = dataSaida.getText();
 				String valorDigitada = txtValor.getText();
 				String formaPagamentoDigitada = (String) cbTipoPagamento.getSelectedItem();
 				boolean situacaoPagamentoSelecionada = false;
@@ -149,10 +164,13 @@ public class CadastrarProcedimento extends JPanel {
 				Tipo tipoSelecionado = (Tipo) cbTipoProcedimento.getSelectedItem();
 				if (mensagem.isEmpty()) {
 					novoProcedimento = new Procedimento(0, petSelecionado, veterinarioSelecionado, tituloDigitado,
-							LocalDate.parse(dataEntradaDigitada, dataFormatter),
-							LocalDate.parse(dataSaidaDigitada, dataFormatter), Double.valueOf(valorDigitada),
+							dataEntrada.getDate(), dataSaida.getDate(), Double.valueOf(valorDigitada),
 							formaPagamentoDigitada, situacaoPagamentoSelecionada, tipoSelecionado);
 					novoProcedimento = controllerProcedimento.salva(novoProcedimento);
+
+					if (novoProcedimento.getIdProcedimento() != 0) {
+						JOptionPane.showMessageDialog(null, "Procedimento salva com sucesso.");
+					}
 				} else {
 					JOptionPane.showMessageDialog(null, mensagem, "Atenção", JOptionPane.WARNING_MESSAGE);
 
@@ -168,19 +186,20 @@ public class CadastrarProcedimento extends JPanel {
 
 			}
 		});
-		cbPet.setBounds(458, 132, 129, 22);
+		cbPet.setBounds(605, 132, 129, 22);
 		add(cbPet);
+
 		PetDAO petDao = new PetDAO();
 		ArrayList<Pet> pets = petDao.consultarTodosPet();
 		for (Pet pet : pets) {
 			cbPet.addItem(pet);
 		}
-
+		cbPet.setSelectedIndex(-1);
 		JLabel lblPet = new JLabel("Pet:");
-		lblPet.setBounds(367, 135, 56, 16);
+		lblPet.setBounds(537, 135, 56, 16);
 		add(lblPet);
 		cbTipoProcedimento = new JComboBox();
-		cbTipoProcedimento.setBounds(458, 199, 129, 22);
+		cbTipoProcedimento.setBounds(605, 199, 129, 22);
 		Tipo t1 = new Tipo(1, "Cirurgia");
 		Tipo t2 = new Tipo(2, "Tosa");
 		Tipo t3 = new Tipo(3, "Castração");
@@ -190,23 +209,26 @@ public class CadastrarProcedimento extends JPanel {
 		cbTipoProcedimento.addItem(t3);
 		cbTipoProcedimento.addItem(t4);
 		add(cbTipoProcedimento);
-
+		cbTipoProcedimento.setSelectedIndex(-1);
 		JLabel lblTipo_1 = new JLabel("Tipo:");
-		lblTipo_1.setBounds(367, 202, 56, 16);
+		lblTipo_1.setBounds(537, 202, 56, 16);
 		add(lblTipo_1);
 
 		JLabel lblVeterinrio = new JLabel("Veterin\u00E1rio:");
-		lblVeterinrio.setBounds(367, 281, 79, 16);
+		lblVeterinrio.setBounds(514, 281, 79, 16);
 		add(lblVeterinrio);
 
 		cbVeterinario = new JComboBox();
-		cbVeterinario.setBounds(458, 278, 129, 22);
+		cbVeterinario.setBounds(605, 278, 129, 22);
 		add(cbVeterinario);
 
 		VeterinarioDAO veterinarioDAO = new VeterinarioDAO();
+
 		ArrayList<Veterinario> veterinarios = veterinarioDAO.consultarTodos();
 		for (Veterinario veterinario : veterinarios) {
 			cbVeterinario.addItem(veterinario);
+
 		}
+		cbVeterinario.setSelectedIndex(-1);
 	}
 }

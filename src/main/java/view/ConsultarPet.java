@@ -27,11 +27,18 @@ public class ConsultarPet extends JPanel {
 	final JTable tblPet;
 	String[] colunas = { "#", "Nome", "Porte", "Peso", "Raça", "Data Nascimento", "Especie" };
 
+	private JButton btnVoltar;
+
+	public JButton getBtnVoltar() {
+		return btnVoltar;
+	}
+
 	public ConsultarPet() {
 		setBorder(new LineBorder(Color.GREEN, 4));
 		setLayout(null);
 
 		tblPet = new JTable();
+		tblPet.setModel(new DefaultTableModel(new Object[][] { colunas }, colunas));
 		tblPet.setForeground(Color.BLACK);
 		tblPet.setBounds(12, 60, 720, 220);
 		add(tblPet);
@@ -118,7 +125,7 @@ public class ConsultarPet extends JPanel {
 		btnGerarXls.setBounds(635, 328, 97, 25);
 		add(btnGerarXls);
 
-		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar = new JButton("Voltar");
 		btnVoltar.setBounds(499, 328, 97, 25);
 		add(btnVoltar);
 

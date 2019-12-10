@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -113,6 +114,8 @@ public class CadastrarVeterinario extends JPanel {
 		add(txtCrmv);
 		txtCrmv.setColumns(10);
 
+		ButtonGroup group = new ButtonGroup();
+
 		final JRadioButton rbtnFeminino = new JRadioButton("Feminino");
 		rbtnFeminino.setBounds(107, 178, 127, 25);
 		add(rbtnFeminino);
@@ -120,6 +123,10 @@ public class CadastrarVeterinario extends JPanel {
 		final JRadioButton rbtnMasculino = new JRadioButton("Masculino");
 		rbtnMasculino.setBounds(243, 178, 127, 25);
 		add(rbtnMasculino);
+
+		ButtonGroup groupSexo = new ButtonGroup();
+		groupSexo.add(rbtnFeminino);
+		groupSexo.add(rbtnMasculino);
 
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
@@ -164,7 +171,12 @@ public class CadastrarVeterinario extends JPanel {
 					novoVeterinario.setCrmv(crmvDigitado);
 					novoVeterinario = controllerVeterinario.salva(novoVeterinario);
 
-				} else {
+				}
+				if (novoVeterinario.getIdVeterinario() != 0) {
+					JOptionPane.showMessageDialog(null, "veterinário Cadastrado com Sucesso.");
+				}
+
+				else {
 					JOptionPane.showMessageDialog(null, mensagem, "Atenção", JOptionPane.WARNING_MESSAGE);
 				}
 

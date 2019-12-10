@@ -3,17 +3,20 @@ package view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+import javax.swing.text.MaskFormatter;
 
 import Controller.ControllerCliente;
 import model.vo.Cliente;
@@ -26,9 +29,9 @@ public class CadastrarCliente extends JPanel {
 	private JTextField txtEmail;
 	private JTextField txtEndereco;
 	String[] adimplente = new String[2];
-	private JComboBox cbAdimplente;
+
 	private Cliente novoCliente;
-	private JComboBox cbAdimplente_1;
+	JComboBox cbAdimplente_1;
 
 	/**
 	 * Create the panel.
@@ -65,9 +68,21 @@ public class CadastrarCliente extends JPanel {
 		add(lblCpf);
 
 		txtCpf = new JTextField();
+
+		txtCpf.setColumns(10);
+
+		MaskFormatter mascaraCpf1;
+		try {
+			mascaraCpf1 = new MaskFormatter("###.###.###-##");
+			mascaraCpf1.setValueContainsLiteralCharacters(false);
+			mascaraCpf1.setOverwriteMode(true);
+			txtCpf = new JFormattedTextField(mascaraCpf1);
+			mascaraCpf1.setValidCharacters("0123456789");
+		} catch (ParseException e) {
+
+		}
 		txtCpf.setBounds(86, 131, 116, 22);
 		add(txtCpf);
-		txtCpf.setColumns(10);
 
 		JLabel lblTelefone = new JLabel("Telefone:");
 		lblTelefone.setBounds(12, 286, 55, 16);
@@ -91,12 +106,13 @@ public class CadastrarCliente extends JPanel {
 		lblAdimplente.setBounds(342, 38, 109, 16);
 		add(lblAdimplente);
 
-		JComboBox cbAdimplente = new JComboBox();
 		cbAdimplente_1 = new JComboBox(adimplente);
-		cbAdimplente_1.setBounds(514, 38, 98, 22);
-		cbAdimplente_1.setModel(new DefaultComboBoxModel(new String[] { "Sim", "Não" }));
-		add(cbAdimplente_1);
 
+		cbAdimplente_1.setBounds(496, 38, 116, 22);
+		cbAdimplente_1.setModel(new DefaultComboBoxModel(new String[] { "Sim", "Não" }));
+
+		add(cbAdimplente_1);
+		cbAdimplente_1.setSelectedIndex(-1);
 		JLabel lblEndereo = new JLabel("Endere\u00E7o:");
 		lblEndereo.setBounds(12, 231, 58, 16);
 		add(lblEndereo);
@@ -106,20 +122,23 @@ public class CadastrarCliente extends JPanel {
 		add(txtEndereco);
 		txtEndereco.setColumns(10);
 
+		ButtonGroup group = new ButtonGroup();
 		final JRadioButton rbFemenino = new JRadioButton("Feminino");
 		rbFemenino.setBounds(86, 178, 127, 25);
 		add(rbFemenino);
+		group.add(rbFemenino);
 
 		final JRadioButton rbMasculino = new JRadioButton("Masculino");
 		rbMasculino.setBounds(248, 178, 127, 25);
 		add(rbMasculino);
+		group.add(rbMasculino);
 
 		ButtonGroup groupSexo = new ButtonGroup();
 		groupSexo.add(rbFemenino);
 		groupSexo.add(rbMasculino);
 
 		JButton btnSalvar = new JButton("Salvar");
-		btnSalvar.setBounds(514, 282, 98, 25);
+		btnSalvar.setBounds(496, 282, 116, 25);
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ControllerCliente controllerCliente = new ControllerCliente();
@@ -142,7 +161,9 @@ public class CadastrarCliente extends JPanel {
 				String mensagem = controllerCliente.validarCamposSalvar(nomeDigitado, sobrenomeDigitado,
 						enderecoDigitado, sexoDigitado, cpfDigitado, telefoneDigitado, emailDigitado);
 				if (mensagem.isEmpty()) {
+
 					boolean adim;
+
 					if (cbAdimplente_1.getSelectedIndex() == 0) {
 						adim = true;
 					} else {
@@ -153,6 +174,10 @@ public class CadastrarCliente extends JPanel {
 							cpfDigitado, telefoneDigitado, emailDigitado, adim, 0);
 
 					novoCliente = controllerCliente.salva(novoCliente);
+
+					if (novoCliente.getIdCliente() != 0) {
+						JOptionPane.showMessageDialog(null, "Cliente Cadastrado com Sucesso.");
+					}
 
 				} else {
 					JOptionPane.showMessageDialog(null, mensagem, "Atenção", JOptionPane.WARNING_MESSAGE);

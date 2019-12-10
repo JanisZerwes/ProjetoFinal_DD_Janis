@@ -19,8 +19,9 @@ public class ProcedimentoBO {
 
 	}
 
-	public void excluirProcedimentoBO(Procedimento procedimentoVO) {
-		// TODO Auto-generated method stub
+	public boolean excluirProcedimentoBO(Procedimento procedimentoVO) {
+		ProcedimentoDAO procedimentoDAO = new ProcedimentoDAO();
+		return procedimentoDAO.excluir(procedimentoVO.getIdProcedimento());
 
 	}
 

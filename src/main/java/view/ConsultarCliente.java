@@ -24,6 +24,12 @@ import model.vo.Cliente;
 public class ConsultarCliente extends JPanel {
 	private ArrayList<Cliente> dadosNovoCliente;
 
+	private JButton btnVoltar;
+
+	public JButton getBtnVoltar() {
+		return btnVoltar;
+	}
+
 	private Cliente novoCliente = null;
 	Locale ptBr = new Locale("pt", "BR");
 	NumberFormat formato = NumberFormat.getCurrencyInstance(ptBr);
@@ -124,11 +130,7 @@ public class ConsultarCliente extends JPanel {
 		btnExcluir.setBounds(315, 340, 97, 25);
 		add(btnExcluir);
 
-		JButton btnVoltar = new JButton("Voltar");
-		btnVoltar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
+		btnVoltar = new JButton("Voltar");
 		btnVoltar.setBounds(480, 340, 97, 25);
 		add(btnVoltar);
 

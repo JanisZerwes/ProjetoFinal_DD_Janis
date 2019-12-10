@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -33,19 +32,20 @@ public class AtualizarVeterinarioFrame extends JFrame {
 	private JTextField txtCertificado;
 	private JLabel lblCrmv;
 	private JTextField txtCrmv;
+	private JButton btnAtualizar;
 
 	public AtualizarVeterinarioFrame(Veterinario veterinarioSelecionado) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 711, 544);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 
 		ControllerVeterinario controladoraVeterinario = new ControllerVeterinario();
 
 		veterinarioSelecionado = controladoraVeterinario.consultarVeterinarioController(veterinarioSelecionado);
 		getContentPane().setLayout(null);
+		contentPane.setLayout(null);
 
 		JLabel lblNome = new JLabel("Nome:");
 		lblNome.setBounds(12, 39, 56, 16);
@@ -132,6 +132,7 @@ public class AtualizarVeterinarioFrame extends JFrame {
 		getContentPane().add(rbtnMasculino);
 
 		JButton btnSalvar = new JButton("Atualizar");
+		btnSalvar.setBounds(0, 0, 0, 0);
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ControllerVeterinario controllerVeterinario = new ControllerVeterinario();
@@ -165,6 +166,63 @@ public class AtualizarVeterinarioFrame extends JFrame {
 		});
 
 		getContentPane().add(btnSalvar);
+
+		btnAtualizar = new JButton("Atualizar");
+		btnAtualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ControllerVeterinario controllerVeterinario = new ControllerVeterinario();
+
+				String nomeDigitado = txtNome.getText();
+				String sobrenomeDigitado = txtSobrenome.getText();
+				String enderecoDigitado = txtEndereco.getText();
+				String sexoDigitado = "";
+				String cpfDigitado = txtCpf.getText().replace("-", "").replace(".", "");
+				String telefoneDigitado = txtTelefone.getText();
+				String emailDigitado = txtEmail.getText();
+				String certificadoDigitado = txtCertificado.getText();
+				String crmvDigitado = txtCrmv.getText();
+				if (rbtnMasculino.isSelected()) {
+					sexoDigitado = "M";
+				}
+
+				if (rbtnFeminino.isSelected()) {
+					sexoDigitado = "F";
+				}
+
+				String mensagem = controllerVeterinario.validarCamposSalvar(nomeDigitado, sobrenomeDigitado,
+						enderecoDigitado, sexoDigitado, cpfDigitado, telefoneDigitado, emailDigitado,
+						certificadoDigitado, crmvDigitado);
+
+				novoVeterinario = new Veterinario(0, nomeDigitado, sobrenomeDigitado, enderecoDigitado, sexoDigitado,
+						cpfDigitado, telefoneDigitado, emailDigitado, certificadoDigitado, crmvDigitado);
+
+				if (mensagem.isEmpty()) {
+
+					novoVeterinario.setIdVeterinario(0);
+					novoVeterinario.setNome(nomeDigitado);
+					novoVeterinario.setSobrenome(sobrenomeDigitado);
+					novoVeterinario.setEndereco(enderecoDigitado);
+					novoVeterinario.setSexo(sexoDigitado);
+					novoVeterinario.setCpf(cpfDigitado);
+					novoVeterinario.setTelefone(telefoneDigitado);
+					novoVeterinario.setEmail(emailDigitado);
+					novoVeterinario.setCertificado(certificadoDigitado);
+					novoVeterinario.setCrmv(crmvDigitado);
+					novoVeterinario = controllerVeterinario.salva(novoVeterinario);
+
+				}
+				if (novoVeterinario.getIdVeterinario() != 0) {
+					JOptionPane.showMessageDialog(null, "veterinário Cadastrado com Sucesso.");
+				}
+
+				else {
+					JOptionPane.showMessageDialog(null, mensagem, "Atenção", JOptionPane.WARNING_MESSAGE);
+				}
+
+			}
+		});
+		btnAtualizar.setBounds(542, 421, 97, 25);
+		contentPane.add(btnAtualizar);
 
 	}
 

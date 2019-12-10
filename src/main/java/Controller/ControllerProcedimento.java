@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import model.bo.PetBO;
 import model.bo.ProcedimentoBO;
-import model.vo.Pet;
+import model.dto.SeletorProcedimento;
 import model.vo.Procedimento;
 
 public class ControllerProcedimento {
@@ -20,9 +20,9 @@ public class ControllerProcedimento {
 		procedimentoBO.cadastrarProcedimentoBO(procedimentoVO);
 	}
 
-	public void excluirProcedimentoController(Procedimento procedimentoVO) {
+	public boolean excluirProcedimentoController(Procedimento procedimentoVO) {
 		ProcedimentoBO procedimentoBO = new ProcedimentoBO();
-		procedimentoBO.excluirProcedimentoBO(procedimentoVO);
+		return procedimentoBO.excluirProcedimentoBO(procedimentoVO);
 	}
 
 	public void atualizarProcedimentoController(Procedimento procedimentoVO) {
@@ -66,9 +66,9 @@ public class ControllerProcedimento {
 		return mensagem;
 	}
 
-	public ArrayList<Procedimento> consultarProcedimentosPorPet(Pet petVO) {
+	public ArrayList<Procedimento> consultarProcedimentosComFiltro(SeletorProcedimento seletor) {
 		PetBO petBO = new PetBO();
-		return petBO.consultarProcedimentosPorPet(petVO);
+		return petBO.consultarProcedimentosPorPet(seletor);
 	}
 
 	public String validarCamposSalvar(String tituloDigitado, String dataEntradaDigitada, String dataSaidaDigitada,

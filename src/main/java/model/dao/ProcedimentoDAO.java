@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import model.dto.SeletorProcedimento;
 import model.vo.Cliente;
 import model.vo.Pet;
 import model.vo.Procedimento;
@@ -156,17 +157,19 @@ public class ProcedimentoDAO {
 		return null;
 	}
 
-	public ArrayList<Procedimento> consultarProcedimentosPorPet(int idPet) {
+	public ArrayList<Procedimento> consultarProcedimentosComFiltro(SeletorProcedimento seletor) {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
 		ArrayList<Procedimento> procedimentosVO = new ArrayList<Procedimento>();
+		String query = " SELECT idProcedimento, titulo, dtEntrada, dtSaida, valor, formaPagamento, situacaoPagamento, idtipo, idpet, idveterinario "
+				+ " FROM Procedimento as proc ";
 
-		String query = "SELECT idProcedimento, titulo, dtEntrada, dtSaida, valor, formaPagamento, situacaoPagamento, idtipo, idpet, idveterinario FROM Procedimento where idpet = "
-				+ idPet;
+		if (seletor.temFiltro()) {
+			query = criarFiltros(seletor, query);
+		}
 
 		try {
-
 			resultado = stmt.executeQuery(query);
 			while (resultado.next()) {
 				Procedimento procedimentoVO = new Procedimento();
@@ -194,9 +197,9 @@ public class ProcedimentoDAO {
 				Veterinario vet = vetDAO.consultarVeterinarioPorID(resultado.getInt(10));
 				procedimentoVO.setVeterinario(vet);
 
-//				Veterinario veterinario = new Veterinario();
-//				veterinario.setIdVeterinario(resultado.getInt(10));
-//				procedimentoVO.setVeterinario(veterinario);
+//					Veterinario veterinario = new Veterinario();
+//					veterinario.setIdVeterinario(resultado.getInt(10));
+//					procedimentoVO.setVeterinario(veterinario);
 
 				procedimentosVO.add(procedimentoVO);
 
@@ -210,6 +213,41 @@ public class ProcedimentoDAO {
 			Banco.closeConnection(conn);
 		}
 		return procedimentosVO;
+	}
+
+	private String criarFiltros(SeletorProcedimento seletor, String query) {
+		query += " WHERE ";
+		boolean primeiro = true;
+		if (seletor.getPet() != null) {
+			if (!primeiro) {
+				query += " AND ";
+			}
+			query += "proc.idpet = " + seletor.getPet().getIdPet();
+			primeiro = false;
+		}
+		if (seletor.getSituacaoPagamento() != null && !seletor.getSituacaoPagamento().isEmpty()) {
+			if (!primeiro) {
+				query += " AND ";
+			}
+			query += "proc.situacaopagamento = '" + seletor.getSituacaoPagamento() + "'";
+			primeiro = false;
+		}
+		if (seletor.getTipo() != null) {
+			if (!primeiro) {
+				query += " AND ";
+			}
+			query += "proc.tipo= " + seletor.getTipo();
+			primeiro = false;
+		}
+		if (seletor.getVeterinario() != null) {
+			if (!primeiro) {
+				query += " AND ";
+			}
+			query += "proc.idveterinario= " + seletor.getVeterinario().getIdVeterinario();
+			primeiro = false;
+		}
+
+		return query;
 	}
 
 	public ArrayList<Procedimento> consultarProcedimentosPorVeterinario(int idVeterinario) {
@@ -250,10 +288,6 @@ public class ProcedimentoDAO {
 				Veterinario vet = vetDAO.consultarVeterinarioPorID(resultado.getInt(10));
 				procedimentoVO.setVeterinario(vet);
 
-//				Veterinario veterinario = new Veterinario();
-//				veterinario.setIdVeterinario(resultado.getInt(10));
-//				procedimentoVO.setVeterinario(veterinario);
-
 				procedimentosVO.add(procedimentoVO);
 
 			}
@@ -266,6 +300,24 @@ public class ProcedimentoDAO {
 			Banco.closeConnection(conn);
 		}
 		return procedimentosVO;
+	}
+
+	public boolean excluir(int idProcedimento) {
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		int resultado = 0;
+
+		String query = "DELETE FROM VETERINARIO WHERE idveterinario = " + idProcedimento;
+		try {
+			resultado = stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			System.out.println("Erro ao executar a Query de Exclusão do cliente.");
+			System.out.println("Erro: " + e.getMessage());
+		} finally {
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return (resultado > 0);
 	}
 
 }
