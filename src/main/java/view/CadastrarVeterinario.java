@@ -3,15 +3,18 @@ package view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+import javax.swing.text.MaskFormatter;
 
 import Controller.ControllerVeterinario;
 import model.vo.Veterinario;
@@ -74,9 +77,19 @@ public class CadastrarVeterinario extends JPanel {
 		add(lblNewLabel);
 
 		txtCpf = new JTextField();
+		txtCpf.setColumns(10);
+		MaskFormatter mascaraCpf1;
+		try {
+			mascaraCpf1 = new MaskFormatter("###.###.###-##");
+			mascaraCpf1.setValueContainsLiteralCharacters(false);
+			mascaraCpf1.setOverwriteMode(true);
+			txtCpf = new JFormattedTextField(mascaraCpf1);
+			mascaraCpf1.setValidCharacters("0123456789");
+		} catch (ParseException e) {
+
+		}
 		txtCpf.setBounds(107, 226, 116, 22);
 		add(txtCpf);
-		txtCpf.setColumns(10);
 
 		lblTelefone = new JLabel("Telefone:");
 		lblTelefone.setBounds(12, 276, 56, 16);

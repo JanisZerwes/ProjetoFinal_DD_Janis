@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import model.bo.PetBO;
 import model.bo.ProcedimentoBO;
+import model.dto.RelatorioProcedimento;
 import model.dto.SeletorProcedimento;
 import model.vo.Procedimento;
 
@@ -75,5 +76,16 @@ public class ControllerProcedimento {
 			String valorDigitada, String formaPagamentoDigitada, String situacaoPagamentoDigitada) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public ArrayList<RelatorioProcedimento> consultarRelatorioProcedimento() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void gerarRelatorioCompleto(ArrayList<RelatorioProcedimento> procedimentosCompleto,
+			String caminhoEscolhido) {
+		// TODO Auto-generated method stub
+
 	}
 }

@@ -178,4 +178,32 @@ public class PetDAO {
 		}
 		return (resultado > 0);
 	}
+
+	public boolean alterar(Pet entidade) {
+		Connection conexao = Banco.getConnection();
+		int resultado = 0;
+		String sql = " UPDATE PET SET NOME =?, PESO =?, PORTE =?, RACA =?, SEXO =?, ESPECIE =?, DTNASCIMENTO =?, IDCLIENTE =? ";
+
+		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql, PreparedStatement.RETURN_GENERATED_KEYS);
+		try {
+			stmt.setString(1, entidade.getNome());
+			stmt.setDouble(2, entidade.getPeso());
+			stmt.setString(3, entidade.getPorte());
+			stmt.setString(4, entidade.getRaca());
+			stmt.setString(5, entidade.getSexo());
+			stmt.setString(6, entidade.getEspecie());
+			System.out.println(entidade.getDtNascimento() + "impressao PetDao");
+			stmt.setString(7, (entidade.getDtNascimento().toString()));
+			stmt.setInt(8, entidade.getCliente().getIdCliente());
+
+			stmt.execute();
+
+		} catch (SQLException e) {
+			System.out.println("Erro ao inserir novo Pet.");
+			System.out.println("Erro: " + e.getMessage());
+		}
+
+		return (resultado > 0);
+
+	}
 }

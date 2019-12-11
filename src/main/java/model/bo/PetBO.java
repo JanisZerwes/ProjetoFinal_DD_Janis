@@ -28,7 +28,8 @@ public class PetBO {
 	}
 
 	public void atualizarPetBO(Pet petVO) {
-		// TODO Auto-generated method stub
+		PetDAO dao = new PetDAO();
+		dao.alterar(petVO);
 
 	}
 

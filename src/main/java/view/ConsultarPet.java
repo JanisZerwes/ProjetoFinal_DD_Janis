@@ -95,6 +95,22 @@ public class ConsultarPet extends JPanel {
 		add(btnConsultar);
 
 		JButton btnAtualizar = new JButton("Atualizar");
+		btnAtualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Pet petSelecionado = new Pet();
+
+				try {
+					Object idSelecionado = tblPet.getModel().getValueAt(tblPet.getSelectedRow(), 0);
+					petSelecionado.setIdPet(Integer.valueOf((String) idSelecionado));
+					AtualizarPetFrame atualizarPet = new AtualizarPetFrame(petSelecionado);
+					System.out.println(petSelecionado.getIdPet());
+					atualizarPet.setVisible(true);
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "Selecione uma linha");
+					System.out.println(e2.getMessage());
+				}
+			}
+		});
 		btnAtualizar.setBounds(188, 328, 97, 25);
 		add(btnAtualizar);
 

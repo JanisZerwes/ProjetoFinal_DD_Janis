@@ -176,6 +176,10 @@ public class AtualizarClienteFrame extends JFrame {
 							cpfDigitado, telefoneDigitado, emailDigitado, null, idSelecionado);
 					controllerCliente.atualizarClienteController(atualizarCliente);
 
+					if (atualizarCliente.getIdCliente() != 0) {
+						JOptionPane.showMessageDialog(null, "Cliente atualizado com Sucesso.");
+					}
+
 				} else {
 					JOptionPane.showMessageDialog(null, mensagem, "Atenção", JOptionPane.WARNING_MESSAGE);
 				}

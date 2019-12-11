@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -19,6 +20,8 @@ import Controller.ControllerPet;
 import Controller.ControllerProcedimento;
 import Controller.ControllerTipo;
 import Controller.ControllerVeterinario;
+import model.dao.ProcedimentoDAO;
+import model.dto.RelatorioProcedimento;
 import model.dto.SeletorProcedimento;
 import model.vo.Pet;
 import model.vo.Procedimento;
@@ -197,6 +200,24 @@ public class ConsultarProcedimento extends JPanel {
 		JButton btnGerarRelatorio = new JButton("Gerar Relat\u00F3rio");
 		btnGerarRelatorio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JFileChooser jfc = new JFileChooser();
+				jfc.setDialogTitle("Salvar relatório como...");
+				int resultado = jfc.showSaveDialog(null);
+				if (resultado == JFileChooser.APPROVE_OPTION) {
+					String caminhoEscolhido = jfc.getSelectedFile().getAbsolutePath();
+
+					ControllerProcedimento controllerProcedimento = new ControllerProcedimento();
+					ArrayList<Procedimento> procedimentosConsultados = controllerProcedimento
+							.consultarTodosProcedimentosController();
+
+					ProcedimentoDAO dao = new ProcedimentoDAO();
+//
+					ArrayList<RelatorioProcedimento> procedimentosCompleto = dao.consultarRelatorioProcedimento();
+//
+//					// controllerPet.gerarRelatorio(petsConsultados, caminhoEscolhido);
+//
+					controllerProcedimento.gerarRelatorioCompleto(procedimentosCompleto, caminhoEscolhido);
+				}
 
 			}
 		});

@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import model.dto.RelatorioCliente;
+import model.dto.RelatorioProcedimento;
 import model.dto.SeletorProcedimento;
 import model.vo.Cliente;
 import model.vo.Pet;
@@ -318,6 +320,45 @@ public class ProcedimentoDAO {
 			Banco.closeConnection(conn);
 		}
 		return (resultado > 0);
+	}
+
+	public ArrayList<RelatorioProcedimento> consultarRelatorioProcedimento() {
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		ArrayList<RelatorioProcedimento> relatorio = new ArrayList<RelatorioProcedimento>();
+		String query = "SELECT idProcedimento, titulo, dtEntrada, dtSaida, valor, formaPagamento, situacaoPagamento, idtipo, idpet, idveterinario FROM Procedimento where idveterinario = "
+				+ idVeterinario;
+		try {
+
+			resultado = stmt.executeQuery(query);
+			while (resultado.next()) {
+				RelatorioCliente relatorioCliente = new RelatorioCliente();
+
+				RelatorioProcedimento.setId(Integer.parseInt(resultado.getString(1)));
+				RelatorioProcedimento.setNome(resultado.getString(2));
+				RelatorioProcedimento.setSobrenome(resultado.getString(3));
+				RelatorioProcedimento.setEndereco(resultado.getString(4));
+				RelatorioProcedimento.setSexo(resultado.getString(5));
+				RelatorioProcedimento.setCpf(resultado.getString(6));
+				RelatorioProcedimento.setTelefone(resultado.getString(7));
+				RelatorioProcedimento.setEmail(resultado.getString(8));
+				RelatorioProcedimento.setQuantidadePets(resultado.getInt(9));
+				// relatorioCliente.setDtNascimento(LocalDate.parse(resultado.getString(7),
+				// dataFormatter));
+
+				relatorio.add(relatorioCliente);
+
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao executar a Query de Consulta de Clientes.");
+			System.out.println("Erro: " + e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return relatorio;
 	}
 
 }

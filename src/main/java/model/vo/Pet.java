@@ -10,7 +10,7 @@ public class Pet {
 	private LocalDate dtNascimento;
 	private double peso;
 	private String porte;
-	private String especie;
+	private Boolean especie;
 	private String raca;
 
 	private String sexo;
@@ -23,7 +23,7 @@ public class Pet {
 	}
 
 	public Pet(int idPet, Cliente cliente, String nome, LocalDate dtNascimento, double peso, String porte,
-			String especie, String raca, String sexo) {
+			Boolean especie, String raca, String sexo) {
 		super();
 		this.idPet = idPet;
 		this.cliente = cliente;
@@ -40,6 +40,11 @@ public class Pet {
 	public Pet() {
 		super();
 
+	}
+
+	public Pet(String nomePetDigitado, String pesoPetDigitado, String porteDigitado, String racaDigitada, String sexo2,
+			String dataNascimentoDigitada) {
+		// TODO Auto-generated constructor stub
 	}
 
 	public int getIdPet() {
@@ -90,11 +95,11 @@ public class Pet {
 		this.porte = porte;
 	}
 
-	public String getEspecie() {
+	public boolean getEspecie() {
 		return especie;
 	}
 
-	public void setEspecie(String especie) {
+	public void setEspecie(Boolean especie) {
 		this.especie = especie;
 	}
 
