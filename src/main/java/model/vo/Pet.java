@@ -10,7 +10,7 @@ public class Pet {
 	private LocalDate dtNascimento;
 	private double peso;
 	private String porte;
-	private Boolean especie;
+	private String especie;
 	private String raca;
 
 	private String sexo;
@@ -23,7 +23,7 @@ public class Pet {
 	}
 
 	public Pet(int idPet, Cliente cliente, String nome, LocalDate dtNascimento, double peso, String porte,
-			Boolean especie, String raca, String sexo) {
+			String especie, String raca, String sexo) {
 		super();
 		this.idPet = idPet;
 		this.cliente = cliente;
@@ -95,11 +95,11 @@ public class Pet {
 		this.porte = porte;
 	}
 
-	public boolean getEspecie() {
+	public String getEspecie() {
 		return especie;
 	}
 
-	public void setEspecie(Boolean especie) {
+	public void setEspecie(String especie) {
 		this.especie = especie;
 	}
 

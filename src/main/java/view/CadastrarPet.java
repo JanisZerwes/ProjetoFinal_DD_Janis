@@ -168,7 +168,7 @@ public class CadastrarPet extends JPanel {
 					novoPet = new Pet(0, clienteSelecionado, nomePetDigitado,
 							LocalDate.parse(dataNascimentoDigitada, dataFormatter), Double.valueOf(pesoPetDigitado),
 							porteDigitado, cbEspecie.getSelectedItem().toString(), racaDigitada, sexo);
-					System.out.println(novoPet.getDtNascimento() + "impressao tela botao castrato 2");
+
 					novoPet = controllerPet.salva(novoPet);
 
 					if (novoPet.getIdPet() != 0) {

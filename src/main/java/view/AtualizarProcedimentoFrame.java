@@ -2,36 +2,9 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
-
-import com.github.lgooddatepicker.components.DatePicker;
-
-import Controller.ControllerProcedimento;
-import model.dao.PetDAO;
-import model.dao.VeterinarioDAO;
-import model.vo.Pet;
-import model.vo.Procedimento;
-import model.vo.Tipo;
-import model.vo.Veterinario;
-
-
-
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -55,6 +28,7 @@ import model.vo.Tipo;
 import model.vo.Veterinario;
 
 public class AtualizarProcedimentoFrame extends JFrame {
+	DateTimeFormatter dataFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 	private DatePicker dataEntrada;
 	private DatePicker dataSaida;
 	private JPanel contentPane;
@@ -93,6 +67,7 @@ public class AtualizarProcedimentoFrame extends JFrame {
 		txtTitulo.setBounds(158, 34, 116, 22);
 		getContentPane().add(txtTitulo);
 		txtTitulo.setColumns(10);
+		txtTitulo.setText(procedimentoSelecionado.getTitulo());
 
 		JLabel lblDataEntrada = new JLabel("Data Entrada:");
 		lblDataEntrada.setBounds(12, 92, 91, 16);
@@ -101,10 +76,12 @@ public class AtualizarProcedimentoFrame extends JFrame {
 		dataEntrada = new DatePicker();
 		dataEntrada.setBounds(160, 89, 300, 30);
 		getContentPane().add(dataEntrada);
+		dataEntrada.setText(String.valueOf(procedimentoSelecionado.getDtEntrada()));
 
 		dataSaida = new DatePicker();
 		dataSaida.setBounds(160, 151, 300, 30);
 		getContentPane().add(dataSaida);
+		dataSaida.setText(String.valueOf(procedimentoSelecionado.getDtSaida()));
 
 		JLabel lblDataSada = new JLabel("Data Sa\u00EDda:");
 		lblDataSada.setBounds(12, 157, 91, 16);
@@ -114,6 +91,7 @@ public class AtualizarProcedimentoFrame extends JFrame {
 		txtDtSaida.setBounds(212, 154, 116, 22);
 		getContentPane().add(txtDtSaida);
 		txtDtSaida.setColumns(10);
+		txtDtSaida.setText(String.valueOf(procedimentoSelecionado.getDtSaida()));
 
 		JLabel lblValor = new JLabel("Valor:");
 		lblValor.setBounds(12, 222, 56, 16);
@@ -123,6 +101,7 @@ public class AtualizarProcedimentoFrame extends JFrame {
 		txtValor.setBounds(212, 219, 116, 22);
 		getContentPane().add(txtValor);
 		txtValor.setColumns(10);
+		txtValor.setText(procedimentoSelecionado.getValor() + "");
 
 		JLabel lblFormaPagamento = new JLabel("Forma Pagamento:");
 		lblFormaPagamento.setBounds(12, 281, 116, 16);
@@ -132,6 +111,7 @@ public class AtualizarProcedimentoFrame extends JFrame {
 		txtFormaPagamento.setBounds(212, 278, 116, 22);
 		getContentPane().add(txtFormaPagamento);
 		txtFormaPagamento.setColumns(10);
+		txtFormaPagamento.setText(procedimentoSelecionado.getFormaPagamento());
 
 		JLabel lblSituaoPagamento = new JLabel("Situa\u00E7\u00E3o Pagamento:");
 		lblSituaoPagamento.setBounds(12, 336, 136, 16);
@@ -147,6 +127,8 @@ public class AtualizarProcedimentoFrame extends JFrame {
 		lblTipo.setBounds(557, 37, 56, 16);
 		getContentPane().add(lblTipo);
 
+//		cbTipoPagamento.setSelectedIndex(0);
+
 		rbSim = new JRadioButton("Sim");
 		rbSim.setBounds(147, 332, 127, 25);
 		getContentPane().add(rbSim);
@@ -154,6 +136,14 @@ public class AtualizarProcedimentoFrame extends JFrame {
 		rbNao = new JRadioButton("Não");
 		rbNao.setBounds(147, 362, 127, 25);
 		getContentPane().add(rbNao);
+
+		if (procedimentoSelecionado.getSituacaoPagamento()) {
+			rbSim.setSelected(true);
+			rbNao.setSelected(false);
+		} else {
+			rbSim.setSelected(false);
+			rbNao.setSelected(true);
+		}
 
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
@@ -182,7 +172,8 @@ public class AtualizarProcedimentoFrame extends JFrame {
 				Tipo tipoSelecionado = (Tipo) cbTipoProcedimento.getSelectedItem();
 				if (mensagem.isEmpty()) {
 					novoProcedimento = new Procedimento(0, petSelecionado, veterinarioSelecionado, tituloDigitado,
-							dataEntradaDigitada.getDate(), dataSaidaDigitada.getDate(), Double.valueOf(valorDigitada),
+							LocalDate.parse(dataEntradaDigitada, dataFormatter),
+							LocalDate.parse(dataSaidaDigitada, dataFormatter), Double.valueOf(valorDigitada),
 							formaPagamentoDigitada, situacaoPagamentoSelecionada, tipoSelecionado);
 					novoProcedimento = controllerProcedimento.salva(novoProcedimento);
 

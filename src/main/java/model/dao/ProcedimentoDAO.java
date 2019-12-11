@@ -126,7 +126,7 @@ public class ProcedimentoDAO {
 
 		ResultSet resultado = null;
 		Procedimento procedimentoVO = new Procedimento();
-		String query = "SELECT idveterinario, titulo, descricao, valor, dtentrada, dtsaida, formapagamento, situacaopagamento FROM procedimento WHERE IDPROCEDIMENTO = "
+		String query = "SELECT idprocedimento, titulo, dtentrada, dtsaida, valor, formapagamento, situacaopagamento, idtipo FROM procedimento WHERE IDPROCEDIMENTO = "
 				+ idProcedimento;
 		try {
 			resultado = stmt.executeQuery(query);
@@ -140,6 +140,7 @@ public class ProcedimentoDAO {
 				procedimentoVO.setValor(resultado.getDouble(5));
 				procedimentoVO.setFormaPagamento(resultado.getString(6));
 				procedimentoVO.setSituacaoPagamento(resultado.getBoolean(7));
+				procedimentoVO.setTipo(new Tipo(Integer.parseInt(resultado.getString(8)), ""));
 
 			}
 
@@ -328,26 +329,26 @@ public class ProcedimentoDAO {
 		ResultSet resultado = null;
 		ArrayList<RelatorioProcedimento> relatorio = new ArrayList<RelatorioProcedimento>();
 		String query = "SELECT idProcedimento, titulo, dtEntrada, dtSaida, valor, formaPagamento, situacaoPagamento, idtipo, idpet, idveterinario FROM Procedimento where idveterinario = "
-				+ idVeterinario;
+		/* + idVeterinario */;
 		try {
 
 			resultado = stmt.executeQuery(query);
 			while (resultado.next()) {
 				RelatorioCliente relatorioCliente = new RelatorioCliente();
 
-				RelatorioProcedimento.setId(Integer.parseInt(resultado.getString(1)));
-				RelatorioProcedimento.setNome(resultado.getString(2));
-				RelatorioProcedimento.setSobrenome(resultado.getString(3));
-				RelatorioProcedimento.setEndereco(resultado.getString(4));
-				RelatorioProcedimento.setSexo(resultado.getString(5));
-				RelatorioProcedimento.setCpf(resultado.getString(6));
-				RelatorioProcedimento.setTelefone(resultado.getString(7));
-				RelatorioProcedimento.setEmail(resultado.getString(8));
-				RelatorioProcedimento.setQuantidadePets(resultado.getInt(9));
+//				RelatorioProcedimento.setId(Integer.parseInt(resultado.getString(1)));
+//				RelatorioProcedimento.setNome(resultado.getString(2));
+//				RelatorioProcedimento.setSobrenome(resultado.getString(3));
+//				RelatorioProcedimento.setEndereco(resultado.getString(4));
+//				RelatorioProcedimento.setSexo(resultado.getString(5));
+//				RelatorioProcedimento.setCpf(resultado.getString(6));
+//				RelatorioProcedimento.setTelefone(resultado.getString(7));
+//				RelatorioProcedimento.setEmail(resultado.getString(8));
+//				RelatorioProcedimento.setQuantidadePets(resultado.getInt(9));
 				// relatorioCliente.setDtNascimento(LocalDate.parse(resultado.getString(7),
 				// dataFormatter));
 
-				relatorio.add(relatorioCliente);
+//				relatorio.add(relatorioCliente);
 
 			}
 		} catch (SQLException e) {
